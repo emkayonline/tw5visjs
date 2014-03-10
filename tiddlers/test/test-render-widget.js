@@ -13,14 +13,13 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
   /*global $tw: false, describe: false, beforeEach: false, jasmine: false, it: false, expect:false */
 
       var wiki;
-  if (!$tw.browser) {
     // Don't run tests if in browser (as we rely on loadTiddersNode)
     describe("vis.js Timeline Widget module", function() {
 
       var widgetNode, wrapper, mockTimeline;
 
       beforeEach(function () {
-        $tw.loadTiddlersNode();
+        $tw.loadWikiTiddlers($tw.boot.wikiPath);
         wiki = $tw.wiki;
         // wiki = new $tw.Wiki();
         // // Add tiddlers
@@ -351,7 +350,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
 
     });
-  }
+  
 
 }
 ());
