@@ -1,0 +1,14 @@
+{
+	"tiddlers": [
+		{
+			"file": "moment-with-langs.min.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/plugins/emkay/visjs/moment.js",
+				"module-type": "library"
+			},
+			"prefix": "var moment;module.exports=true;",
+			"suffix": "moment = module.exports; exports.moment = moment\n"
+		}
+	]
+}

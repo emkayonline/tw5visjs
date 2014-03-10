@@ -1,0 +1,22 @@
+{
+	"tiddlers": [
+		{
+			"file": "vis.min.js",
+			"fields": {
+				"type": "application/javascript",
+				"title": "$:/plugins/emkay/visjs/vis.js",
+				"module-type": "library"
+			},
+			"prefix": "var vis;",
+			"suffix": "vis = module.exports; exports.vis = vis\n"
+		},
+		{
+			"file": "vis.css",
+			"fields": {
+				"type": "text/css",
+				"title": "$:/plugins/emkay/visjs/vis.css",
+				"tags": "[[$:/tags/stylesheet]]"
+			}
+		}
+	]
+}

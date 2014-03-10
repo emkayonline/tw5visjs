@@ -1,0 +1,9 @@
+title: $:/plugins/emkay/visjs/base
+tags: [[$:/tags/stylesheet]]
+
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline
+
+.widget-error {
+  color: #FF0000;
+}
+
