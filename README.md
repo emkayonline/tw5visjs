@@ -8,7 +8,7 @@ Also, the plug-in has been designed to work off-line, enabling it to be used wit
 
 # Demonstration
 
-A demonstration of the wiki can be see at githubpages.
+A demonstration of the wiki can be see at this projects [demo wiki](http://emkayonline.github.io/tw5visjs).
 
 To see the timeline in action,  view the tiddler called ShowTimelineDemo.  This shows the timeline for construction of The Seven Wonders of the Waterways (Based on the original list by Robert Aickman).
 
@@ -18,14 +18,14 @@ The timeline is best viewed by increasing the window width in Theme Tweaks in th
 
 The documentation on usage of the plug-in can be found in the shadow tiddler $:/plugins/emkay/visjs/help.  (The intention is to integrate this with the TW5 help system, when that system is finalised).
 
-# Installation of plug-in
+# Installation
 
-If you don't wish to clone the source of this plug-in (to edit the code and run it under node.js), then you can install a version in your own wiki using the wiki at githubpages.
+If you don't wish to clone the source of this plug-in (to edit the code and run it under node.js), then you can install a version in your own wiki using the wiki at [demo wiki](http://emkayonline.github.io/tw5visjs).
 
 *NOTE: For installation of TW5 plug-ins, currently, there seems to be an issue using Safari's drag and drop, so I would recommend Firefox or Chrome.*
 
 1. Open your own wiki in a browser window
-2. In a separate browser window browse to githubpages and open the ControlPanel 
+2. In a separate browser window browse to [demo wiki](http://emkayonline.github.io/tw5visjs) and open the ControlPanel 
 3. In the ControlPanel chose the plugins tag.  From there, drag $:/plugins/emkay/visjs into your wiki.
 4. Save your wiki
 5. Reopen your wiki.
