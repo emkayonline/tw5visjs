@@ -1,0 +1,9 @@
+title: Standedge Tunnel
+start: 1797
+end: 1811
+tags: SevenWonders
+type: text/vnd.tiddlywiki
+
+<$transclude field="start"/>|<$transclude field="end"/>|
+
+The Standedge Tunnel is the longest, deepest and highest canal tunnel in Britain.

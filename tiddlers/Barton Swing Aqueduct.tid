@@ -1,0 +1,9 @@
+title: Barton Swing Aqueduct
+start: 1890
+end: 1894
+tags: SevenWonders
+type: text/vnd.tiddlywiki
+
+<$transclude field="start"/>|<$transclude field="end"/>|
+
+A moveable navigable aqueduct carrying the Bridgewater Canal across the Manchester Ship Canal.

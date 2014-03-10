@@ -3,7 +3,7 @@ title: test-render-widget.js
 type: application/javascript
 tags: [[$:/tags/test-spec]]
 
-Tests the wikitext rendering pipeline end-to-end. We also need tests that individually test parsers, rendertreenodes etc., but this gets us started.
+Tests the visjs timeline widget wrapper (This does not use the visjs timeline, but uses a spy for testing)
 
 \*/
 (function(){

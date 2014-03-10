@@ -187,9 +187,12 @@ module-type: widget
     }
     var self = this;
     this.timeline.on('select', function(properties) {
-      var toTiddlerTitle = properties.items[0];
-      var fromTiddlerTitle = self.getVariable("currentTiddler");
-      displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
+      // Check if background or a tiddler is selected
+      if (properties.items.length !== 0) {
+        var toTiddlerTitle = properties.items[0];
+        var fromTiddlerTitle = self.getVariable("currentTiddler");
+        displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
+      }
     });
   };
 
