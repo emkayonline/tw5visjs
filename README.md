@@ -38,7 +38,9 @@ This will show all your non-system tiddlers on a timeline, with the their start 
 
 # Development
 
-If you wish to edit the code for this plug-in, please clone this git repository.
+If you wish to edit the code for this plug-in, please clone this git repository.  This project uses git submodules for moment.js and vis.js, so to clone these at the same time, use
+
+    git clone --recursive https://github.com/emkayonline/tw5visjs.git
 
 For development and testing I run TiddlyWiki using node.js. See the TW5 node.js [installation instructions](http://tiddlywiki.com/static/TiddlyWiki%2520on%2520Node.js.html).
 
