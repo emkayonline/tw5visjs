@@ -1,0 +1,6 @@
+[submodule "plugins/visjs/momentjs/github"]
+	path = plugins/visjs/momentjs/github
+	url = https://github.com/moment/moment.git
+[submodule "plugins/visjs/vis/github"]
+	path = plugins/visjs/vis/github
+	url = https://github.com/almende/vis.git

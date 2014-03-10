@@ -1,7 +1,7 @@
 {
 	"tiddlers": [
 		{
-			"file": "moment-with-langs.min.js",
+			"file": "github/min/moment-with-langs.min.js",
 			"fields": {
 				"type": "application/javascript",
 				"title": "$:/plugins/emkay/visjs/moment.js",
