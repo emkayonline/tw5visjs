@@ -1,5 +1,5 @@
 /*\
-title: test-render-widget.js
+title: test-timeline-widget.js
 type: application/javascript
 tags: [[$:/tags/test-spec]]
 
@@ -98,7 +98,6 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
       });
 
       it("should render from a tiddlerList and default startDateField, setting start range to lowest", function() {
-        debugger;
         // Construct the widget node
         createAndRenderWidgetNode('<$visjstimeline tiddler="AListTiddler"/>');
         // Test the rendering
