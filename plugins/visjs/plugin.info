@@ -1,9 +1,9 @@
 {
 	"title": "$:/plugins/emkay/visjs",
 	"description": "vis.js plugin for TiddlyWiki5",
-	"author": "Martin Kendall",
-	"version": "1.0.0-alpha1",
+	"author": "emkay",
+	"version": "0.7.1",
 	"core-version": ">=5.0.0",
-	"source": "http://tiddlywiki.com/MyPlugin",
+	"source": "https://github.com/emkayonline/tw5visjs",
 	"plugin-type": "plugin"
 }
