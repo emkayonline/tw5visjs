@@ -6,6 +6,10 @@ type: text/vnd.tiddlywiki
 
 The vis.js widget provides features of the [[vis.js|http://visjs.org]] Timeline library.  This allows a set of tiddlers to be shown on a graphical timeline.
 
+! Requirements
+
+This plugin required TW5 version 5.0.8-beta or later.
+
 ! Content and Attributes
 
 A list of tiddlers is specified using either a filter, list or tiddler list field.  
