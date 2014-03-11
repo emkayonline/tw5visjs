@@ -40,7 +40,7 @@ module-type: widget
       this.domNodes.push(timelineHolder);
       this.createTimeline(timelineHolder);
       this.updateTimeline();
-      // We could follow the d3.js pattern here as children are ignored
+      // We follow the d3.js pattern here as children are ignored
       // this.renderChildren(timelineHolder,nextSibling);
     } else {
       this.errorDiv.innerHTML = this.parseTreeNode.type+": Unexpected attribute(s) "+attrParseWorked.join(", ");
@@ -106,7 +106,6 @@ module-type: widget
     var optionList = [];
     if(this.filter) {
       // process the filter into an array of tiddler titles
-      // optionList = this.wiki.filterTiddlers(this.filter,this.getVariable("currentTiddler"), changedTiddlers);
       optionList = this.compiledFilter.call(this.getVariable("currentTiddler"), changedTiddlers);
     } else if(this.list) {
       // parse the given list into an array
@@ -125,23 +124,13 @@ module-type: widget
     var withoutDraftsList = optionList.filter(function(optionTitle) {
       var optionTiddler = self.wiki.getTiddler(optionTitle);
       if (optionTiddler === undefined) {
-        // tiddler may not exist if list attribute provided to widget
-        // So exclude
+        // tiddler may not exist if list attribute provided to widget, so exclude
         return true;
       } else {
         var isDraft = optionTiddler && optionTiddler.hasField("draft.of");
         return !isDraft;
       }
     });
-    // var withoutDraftsList = [];
-    // for (var i=0; i < optionList.length; i++) {
-    //   var optionTitle = optionList[i];
-    //   var optionTiddler = this.wiki.getTiddler(optionTitle);
-    //   var isDraft = optionTiddler && optionTiddler.hasField("draft.of");
-    //   if (!isDraft) {
-    //     withoutDraftsList.push(optionTitle)
-    //   };
-    // }
     return withoutDraftsList;
   };
   /*
@@ -149,8 +138,6 @@ module-type: widget
      */
   TimelineWidget.prototype.refresh = function(changedTiddlers) {
     var changedAttributes = this.computeAttributes();
-    // MK need to sort when we do this 
-    // if(changedAttributes.data || changedTiddlers[this.barData]) {
     if(changedAttributes.filter || changedAttributes.startDateField || changedAttributes.endDateField || changedAttributes.groupField) {
       this.refreshSelf();
       this.updateTimeline();
