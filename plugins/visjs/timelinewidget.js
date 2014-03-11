@@ -164,7 +164,7 @@ module-type: widget
   }
 
 
-  TimelineWidget.prototype.createTimeline = function(holderDiv) { // create a <div> container for the <select> // var holderDiv = $tw.utils.domMaker("div",{class:this.selectClass});
+  TimelineWidget.prototype.createTimeline = function(holderDiv) { 
     var data = [];
     // this.document === $tw.fakeDocument for test mode
     if (this.parentWidget.parentWidget.mockTimeline === undefined) {
