@@ -12,7 +12,8 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
   /*jslint node: true, browser: true */
   /*global $tw: false, describe: false, beforeEach: false, jasmine: false, it: false, expect:false */
 
-      var wiki;
+  var wiki;
+  if (!$tw.browser) {
     // Don't run tests if in browser (as we rely on loadTiddersNode)
     describe("vis.js Timeline Widget module", function() {
 
@@ -350,7 +351,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
 
     });
-  
 
+  }
 }
 ());
