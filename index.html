@@ -123,11 +123,15 @@ Error message and password prompt
 
 <li>$:/DefaultTiddlers</li>
 
+<li>$:/HistoryList</li>
+
 <li>$:/isEncrypted</li>
 
 <li>$:/plugins/emkay/visjs</li>
 
 <li>$:/plugins/tiddlywiki/jasmine</li>
+
+<li>$:/state/tab-{260706635}</li>
 
 <li>$:/StoryList</li>
 
@@ -2757,22 +2761,27 @@ Error message and password prompt
 <pre>ShowTimelineDemo
 $:/plugins/emkay/visjs/help</pre>
 </div>
+<div current-tiddler="$:/ControlPanel" modified="20140311090324816" title="$:/HistoryList" type="application/json">
+<pre>[
+    {
+        &quot;title&quot;: &quot;$:/ControlPanel&quot;,
+        &quot;fromPageRect&quot;: {
+            &quot;top&quot;: 157,
+            &quot;left&quot;: 806.328125,
+            &quot;width&quot;: 36.328125,
+            &quot;right&quot;: 842.65625,
+            &quot;bottom&quot;: 184,
+            &quot;height&quot;: 27
+        }
+    }
+]</pre>
+</div>
 <div title="$:/isEncrypted">
 <pre>no</pre>
 </div>
-<div dependents="" description="vis.js plugin for TiddlyWiki5" plugin-type="plugin" title="$:/plugins/emkay/visjs" type="application/json" version="1.0.0-alpha1">
+<div dependents="" description="vis.js plugin for TiddlyWiki5" plugin-type="plugin" title="$:/plugins/emkay/visjs" type="application/json" version="0.7.1">
 <pre>{
     &quot;tiddlers&quot;: {
-        &quot;$:/plugins/emkay/visjs/base&quot;: {
-            &quot;title&quot;: &quot;$:/plugins/emkay/visjs/base&quot;,
-            &quot;tags&quot;: &quot;[[$:/tags/stylesheet]]&quot;,
-            &quot;text&quot;: &quot;\\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline\n\n.widget-error {\n  color: #FF0000;\n}\n\n&quot;
-        },
-        &quot;$:/plugins/emkay/visjs/errormessage&quot;: {
-            &quot;title&quot;: &quot;$:/plugins/emkay/visjs/errormessage&quot;,
-            &quot;type&quot;: &quot;text/vnd.tiddlywiki&quot;,
-            &quot;text&quot;: &quot;My error message\n&quot;
-        },
         &quot;$:/plugins/emkay/visjs/help&quot;: {
             &quot;title&quot;: &quot;$:/plugins/emkay/visjs/help&quot;,
             &quot;tags&quot;: &quot;[[$:/tags/help]]&quot;,
@@ -2842,6 +2851,9 @@ $:/plugins/emkay/visjs/help</pre>
         }
     }
 }</pre>
+</div>
+<div title="$:/state/tab-{260706635}">
+<pre>$:/core/ui/ControlPanel/Plugins</pre>
 </div>
 <div list="ShowTimelineDemo $:/plugins/emkay/visjs/help" title="$:/StoryList">
 <pre></pre>
@@ -3034,7 +3046,8 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
   /*jslint node: true, browser: true */
   /*global $tw: false, describe: false, beforeEach: false, jasmine: false, it: false, expect:false */
 
-      var wiki;
+  var wiki;
+  if (!$tw.browser) {
     // Don't run tests if in browser (as we rely on loadTiddersNode)
     describe(&quot;vis.js Timeline Widget module&quot;, function() {
 
@@ -3372,8 +3385,8 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
 
     });
-  
 
+  }
 }
 ());
 </pre>
