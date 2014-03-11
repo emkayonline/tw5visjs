@@ -1,9 +1,0 @@
-title: Bingley Five Rise Locks
-start: 1750
-end: 1799
-tags: SevenWonders
-type: text/vnd.tiddlywiki
-
-<$transclude field="start"/>|<$transclude field="end"/>|
-
-Bingley Five Rise Locks is a staircase lock on the Leeds and Liverpool Canal

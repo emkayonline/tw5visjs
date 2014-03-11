@@ -1,9 +1,0 @@
-title: Caen Hill Lock Flight
-start: 1810
-end: 1810
-tags: SevenWonders
-type: text/vnd.tiddlywiki
-
-<$transclude field="start"/>|<$transclude field="end"/>|
-
-A flight of locks on the Kennet and Avon Canal, between Rowde and Devizes.

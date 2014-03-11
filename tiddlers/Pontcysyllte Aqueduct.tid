@@ -1,9 +1,0 @@
-title: Pontcysyllte Aqueduct
-start: 1795
-end: 1805
-tags: SevenWonders
-type: text/vnd.tiddlywiki
-
-<$transclude field="start"/>|<$transclude field="end"/>|
-
-

@@ -1,9 +1,0 @@
-title: Anderton Boat Lift
-start: 1872
-end: 1875
-tags: SevenWonders
-type: text/vnd.tiddlywiki
-
-<$transclude field="start"/>|<$transclude field="end"/>|
-
-It provides a 50-foot  vertical link between the River Weaver and the Trent and Mersey Canal.

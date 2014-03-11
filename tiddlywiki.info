@@ -1,9 +1,0 @@
-{
-    "plugins": [
-        "tiddlywiki/jasmine"
-    ],
-    "themes": [
-        "tiddlywiki/vanilla",
-        "tiddlywiki/snowwhite"
-    ]
-}
