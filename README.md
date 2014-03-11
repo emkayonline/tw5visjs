@@ -6,6 +6,10 @@ This plug-in has been testing on OS X with Safari, Chrome and Firefox, but shoul
 
 Also, the plug-in has been designed to work off-line, enabling it to be used without a wireless connection on an iPad/iPhone using [TWEdit](http://itunes.apple.com/gb/app/twedit/id409607956?mt=8)
 
+## Requirements
+
+This plugin requires TiddlyWiki 5.0.8-beta or later.
+
 ## Demonstration
 
 A demonstration of the wiki can be see at this projects [demo wiki](http://emkayonline.github.io/tw5visjs).

@@ -3,7 +3,7 @@
 	"description": "vis.js plugin for TiddlyWiki5",
 	"author": "emkay",
 	"version": "0.7.1",
-	"core-version": ">=5.0.0",
+	"core-version": ">=5.0.8",
 	"source": "https://github.com/emkayonline/tw5visjs",
 	"plugin-type": "plugin"
 }
