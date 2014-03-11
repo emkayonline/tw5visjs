@@ -6,7 +6,7 @@ This plug-in has been testing on OS X with Safari, Chrome and Firefox, but shoul
 
 Also, the plug-in has been designed to work off-line, enabling it to be used without a wireless connection on an iPad/iPhone using [TWEdit](http://itunes.apple.com/gb/app/twedit/id409607956?mt=8)
 
-# Demonstration
+## Demonstration
 
 A demonstration of the wiki can be see at this projects [demo wiki](http://emkayonline.github.io/tw5visjs).
 
@@ -14,11 +14,11 @@ To see the timeline in action,  view the tiddler called ShowTimelineDemo.  This 
 
 The timeline is best viewed by increasing the window width in Theme Tweaks in the Appearance section of the ControlPanel.
 
-# Documentation
+## Documentation
 
 The documentation on usage of the plug-in can be found in the shadow tiddler $:/plugins/emkay/visjs/help.  (The intention is to integrate this with the TW5 help system, when that system is finalised).
 
-# Installation
+## Installation
 
 If you don't wish to clone the source of this plug-in (to edit the code and run it under node.js), then you can install a version in your own wiki using the wiki at [demo wiki](http://emkayonline.github.io/tw5visjs).
 
@@ -36,7 +36,7 @@ To test the widget in your wiki you may like to create a tiddler with the text:
 
 This will show all your non-system tiddlers on a timeline, with the their start date being their creation dates and end dates being their last modified date.
 
-# Development
+## Development
 
 If you wish to edit the code for this plug-in, please clone this git repository.  This project uses git submodules for moment.js and vis.js, so to clone these at the same time, use
 
@@ -44,7 +44,7 @@ If you wish to edit the code for this plug-in, please clone this git repository.
 
 For development and testing I run TiddlyWiki using node.js. See the TW5 node.js [installation instructions](http://tiddlywiki.com/static/TiddlyWiki%2520on%2520Node.js.html).
 
-## Testing
+### Testing
 
 The plug-in can be tested at the command line using a node installation of TW5.  
 
@@ -57,7 +57,7 @@ To run the command line tests, in the root directory of this project type
   
 This will run all of the command line tests.  This checks all the calculations and transformations work, but does not test the visual part of the plug-in.
 
-### jasmine patch
+#### jasmine patch
 
 Due to a bug in jasmine 1.3.1 (It has a cross-frame issues with detecting date objects), I have has to patch the one bundled with TW5.
 
@@ -69,7 +69,7 @@ The patch required is at line 960 of plugins/tiddlywiki/jasmine/jasmine-1.3.1/ja
 If you do not apply this patch tests will pass when they shouldn't.  You should only need to apply this patch if you intend to edit and test the tw5visjs code.
 
 
-## Visual Test and Demonstration
+### Visual Test and Demonstration
 
 To run tiddlywiki with the development version of the widget:
 
@@ -83,6 +83,6 @@ To see a demo of the timeline widget, view the tiddler called ShowTimelineDemo.
 
 To run the visual tests, view the tiddler called ShowTimelineTests.  This will show red messages for the cases that test for invalid parameters, formats etc. 
 
-# Roadmap
+## Roadmap
 
 * I intend to support the graph view in vis.js.
