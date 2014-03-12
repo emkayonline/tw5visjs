@@ -6,7 +6,7 @@ type: text/vnd.tiddlywiki
 This timeline can be zoomed in and out to view more detail and can be scrolled left and right to view more years.
 
 
-This list was compiled in 1955 by Robert Aickman (co-founder of the Inland Waterways Association) and published in 'Know Your Waterways'.
+The list 'Seven Wonders of the Waterways' was compiled in 1955 by Robert Aickman (co-founder of the Inland Waterways Association) and published in 'Know Your Waterways'.
 
 <$visjstimeline filter="[tag[SevenWonders]]" startDateField="start" endDateField="end" format="YYYY"/>
 
