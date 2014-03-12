@@ -1,0 +1,8 @@
+created: 20140213175957799
+modified: 20140214181535243
+title: ShowGraph
+type: text/vnd.tiddlywiki
+
+
+<$visjsgraph tiddler="TiddlerOne"/>
+
