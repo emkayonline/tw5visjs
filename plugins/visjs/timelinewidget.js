@@ -106,7 +106,8 @@ module-type: widget
     var optionList = [];
     if(this.filter) {
       // process the filter into an array of tiddler titles
-      optionList = this.compiledFilter.call(this.getVariable("currentTiddler"), changedTiddlers);
+      debugger;
+      optionList = this.compiledFilter.call(null, changedTiddlers, this.getVariable("currentTiddler"));
     } else if(this.list) {
       // parse the given list into an array
       optionList = $tw.utils.parseStringArray(this.list);
