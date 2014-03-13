@@ -108,15 +108,18 @@ module-type: widget
     if (nodeSetAndEdges.nodeSet.hasOwnProperty(currTiddlerTitle) || (depth > maxDepth)) {
       return nodeSetAndEdges;
     }
-    nodeSetAndEdges.nodeSet[currTiddlerTitle] = {id: currTiddlerTitle, label: currTiddlerTitle};
+    // http://visjs.org/examples/graph/04_shapes.html
+    nodeSetAndEdges.nodeSet[currTiddlerTitle] = {id: currTiddlerTitle, label: currTiddlerTitle, shape: "elipse"};
+    var toTiddler = $tw.wiki.getTiddler(currTiddlerTitle);
+    if (toTiddler === undefined) {
+      nodeSetAndEdges.nodeSet[currTiddlerTitle].shape = "triangle";
+    } else {
+      nodeSetAndEdges.nodeSet[currTiddlerTitle].color = toTiddler.fields.color;
+    }
     if (fromTiddler !== null) {
       nodeSetAndEdges.edges.push( {from: fromTiddler, to: currTiddlerTitle, label: linkType, style: "arrow"} );
     } else {
-      nodeSetAndEdges.nodeSet[currTiddlerTitle].label = "Start "+currTiddlerTitle;
-    }
-    var toTiddler = $tw.wiki.getTiddler(currTiddlerTitle);
-    if (toTiddler === undefined) {
-      nodeSetAndEdges.nodeSet[currTiddlerTitle].label = "Missing "+currTiddlerTitle;
+      nodeSetAndEdges.nodeSet[currTiddlerTitle].shape = "box";
     }
 
     // Forward links
@@ -134,13 +137,29 @@ module-type: widget
     return nodeSetAndEdges;
   }
 
+  function displayTiddler(self,toTiddlerTitle,fromTiddlerTitle){
+    var bounds = self.domNodes[0].getBoundingClientRect();
+    var e = {
+      type: "tw-navigate",
+      navigateTo: toTiddlerTitle,
+      navigateFromTitle: fromTiddlerTitle,
+      navigateFromClientRect: { top: bounds.top, left: bounds.left, width: bounds.width, right: bounds.right, bottom: bounds.bottom, height: bounds.height
+      }
+    };
+    self.dispatchEvent(e);
+  }
+
   GraphWidget.prototype.createGraph = function(holderDiv) { 
 
+    var tiddlers = $tw.wiki.filterTiddlers("[is[current]listed[]]","TiddlerFour");
+    console.log(tiddlers);
+    tiddlers = $tw.wiki.filterTiddlers("[listed[TiddlerFour]]","TiddlerFour");
+    console.log(tiddlers);
     var tiddlers = $tw.wiki.filterTiddlers("[is[current]list[]]","TiddlerOne");
     console.log(tiddlers);
     tiddlers = $tw.wiki.filterTiddlers("[list[TiddlerOne]]","TiddlerOne");
     console.log(tiddlers);
-    var nodeSetAndEdges = buildNodeSetAndEdges({nodeSet: {}, edges: []},null, null, this.tiddler,1,3);
+    var nodeSetAndEdges = buildNodeSetAndEdges({nodeSet: {}, edges: []},null, null, this.tiddler,1,5);
 
     var nodes = [];
     for (var key in nodeSetAndEdges.nodeSet) {
@@ -149,7 +168,7 @@ module-type: widget
       }
     }
     
-
+    console.log(nodes);
     var data= {
       nodes: nodes,
       edges: nodeSetAndEdges.edges,
@@ -161,6 +180,22 @@ module-type: widget
     } else {
       this.graph = this.parentWidget.parentWidget.mockGraph;
     }
+    var self = this;
+    this.graph.on('doubleClick', function(properties) {
+      // Check if background or a tiddler is selected
+      if (properties.nodes.length !== 0) {
+        self.tiddler = properties.nodes[0];
+        self.createGraph(holderDiv);
+      }
+    });
+    this.graph.on('click', function(properties) {
+      // Check if background or a tiddler is selected
+      if (properties.nodes.length !== 0) {
+        var toTiddlerTitle = properties.nodes[0];
+        var fromTiddlerTitle = self.getVariable("currentTiddler");
+        displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
+      }
+    });
   };
 
 
