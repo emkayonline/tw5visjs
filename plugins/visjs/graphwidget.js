@@ -21,7 +21,7 @@ module-type: widget
 
   var backlinksFilter = $tw.wiki.compileFilter("[is[current]backlinks[]]");
   var linksFilter = $tw.wiki.compileFilter("[is[current]links[]]");
-  var listFilter = $tw.wiki.compileFilter("[is[current]list[]]");
+  var listFilter = $tw.wiki.compileFilter("[list[]]");
   var listedFilter = $tw.wiki.compileFilter("[is[current]listed[]]");
   var tagsFilter = $tw.wiki.compileFilter("[is[current]tags[]]");
   var taggingFilter = $tw.wiki.compileFilter("[is[current]tagging[]]");
@@ -59,7 +59,14 @@ module-type: widget
       if (attributeDefns[attr] === undefined) {
         errors.push(attr);
       } else {
-        this[attr] = this.attributes[attr];
+        if (attributeDefns[attr].type == "string") {
+          this[attr] = this.attributes[attr];
+        } else if (attributeDefns[attr].type == "integer") {
+          this[attr] = parseInt(this.attributes[attr] );
+          if (isNaN(this[attr])) {
+            delete this[attr];
+          }
+        }
       }
     }
     if (errors.length !== 0) {
@@ -75,17 +82,19 @@ module-type: widget
 
   GraphWidget.prototype.execute = function() {
     var attrParseWorked = this.parseWidgetAttributes({
-           tiddler:       {   type: "string", defaultValue: this.getVariable("currentTiddler")}
+           tiddler:       {   type: "string", defaultValue: this.getVariable("currentTiddler")},
+           maxDepth:       {   type: "integer", defaultValue: 3}
            // options:  { type: "flags", defaultValue: undefined}
             });
 
+    console.log(this.maxDepth);
     return attrParseWorked;
   };
 
-  function addNodes(compiledFilter, linkType, currTiddlerTitle, nodeSetAndEdges, depth, maxDepth) {
+  function addNodes(compiledFilter, linkType, currTiddlerTitle, nodeAndEdgeSets, depth, maxDepth) {
     var tiddlers = compiledFilter.call(null, null, currTiddlerTitle);
     tiddlers.forEach(function(entry) {
-        nodeSetAndEdges = buildNodeSetAndEdges(nodeSetAndEdges, currTiddlerTitle, linkType, entry, depth+1, maxDepth);
+        nodeAndEdgeSets = buildNodeAndEdgeSets(nodeAndEdgeSets, currTiddlerTitle, linkType, entry, depth+1, maxDepth);
     });
   }
   // Types
@@ -104,37 +113,83 @@ module-type: widget
   // system tiddlers
   // Shadow tiddlers
   //
-  function buildNodeSetAndEdges(nodeSetAndEdges, fromTiddler, linkType, currTiddlerTitle, depth, maxDepth) {
-    if (nodeSetAndEdges.nodeSet.hasOwnProperty(currTiddlerTitle) || (depth > maxDepth)) {
-      return nodeSetAndEdges;
+  function buildNodeAndEdgeSets(nodeAndEdgeSets, fromTiddlerTitle, linkType, toTiddlerTitle, depth, maxDepth) {
+    // if (nodeAndEdgeSets.nodeSet.hasOwnProperty(toTiddlerTitle) || (depth > maxDepth)) {
+    //   return nodeAndEdgeSets;
+    // }
+    if (depth > maxDepth) {
+      return nodeAndEdgeSets;
     }
+    if (nodeAndEdgeSets.edgeSet.hasOwnProperty(fromTiddlerTitle+":"+toTiddlerTitle+":"+linkType)) {
+      return nodeAndEdgeSets;
+    }
+    var inverse = "";
+    if (linkType == "link") {
+      inverse = "backlink";
+    } else if (linkType == "backlink") {
+      inverse = "link";
+    } else if (linkType == "list") {
+      inverse = "listed";
+    } else if (linkType == "listed") {
+      inverse = "list";
+    } else if (linkType == "tag") {
+      inverse = "tagging";
+    } else if (linkType == "tagging") {
+      inverse = "tag";
+    }
+    // if (nodeAndEdgeSets.edgeSet.hasOwnProperty(toTiddlerTitle+":"+fromTiddlerTitle+":"+inverse)) {
+    //   return nodeAndEdgeSets;
+    // }
     // http://visjs.org/examples/graph/04_shapes.html
-    nodeSetAndEdges.nodeSet[currTiddlerTitle] = {id: currTiddlerTitle, label: currTiddlerTitle, shape: "elipse"};
-    var toTiddler = $tw.wiki.getTiddler(currTiddlerTitle);
-    if (toTiddler === undefined) {
-      nodeSetAndEdges.nodeSet[currTiddlerTitle].shape = "triangle";
-    } else {
-      nodeSetAndEdges.nodeSet[currTiddlerTitle].color = toTiddler.fields.color;
+    if (fromTiddlerTitle !== null) {
+      if ( (linkType == "link") || (linkType == "list") || (linkType == "tag") ) {
+        nodeAndEdgeSets.edgeSet[fromTiddlerTitle+":"+toTiddlerTitle+":"+linkType] = {from: fromTiddlerTitle, to: toTiddlerTitle, label: linkType, style: "arrow"};
+      } else if ( (linkType == "backlink") || (linkType == "listed") || (linkType == "tagging") ) {
+        nodeAndEdgeSets.edgeSet[toTiddlerTitle+":"+fromTiddlerTitle+":"+inverse] = {from: toTiddlerTitle, to: fromTiddlerTitle, label: linkType, style: "arrow"};
+      }
     }
-    if (fromTiddler !== null) {
-      nodeSetAndEdges.edges.push( {from: fromTiddler, to: currTiddlerTitle, label: linkType, style: "arrow"} );
-    } else {
-      nodeSetAndEdges.nodeSet[currTiddlerTitle].shape = "box";
+    if (nodeAndEdgeSets.nodeSet.hasOwnProperty(toTiddlerTitle)) {
+      return nodeAndEdgeSets;
     }
 
+    nodeAndEdgeSets.nodeSet[toTiddlerTitle] = {id: toTiddlerTitle, label: toTiddlerTitle, shape: "elipse"};
+    if ($tw.wiki.isSystemTiddler(toTiddlerTitle)) {
+      nodeAndEdgeSets.nodeSet[toTiddlerTitle].shape = "box";
+    }
+    var toTiddler = $tw.wiki.getTiddler(toTiddlerTitle);
+    if (toTiddler === undefined) {
+      nodeAndEdgeSets.nodeSet[toTiddlerTitle].shape = "triangle";
+    } else {
+      nodeAndEdgeSets.nodeSet[toTiddlerTitle].color = toTiddler.fields.color;
+    }
+    if (fromTiddlerTitle === null) {
+      console.log("start with "+toTiddlerTitle);
+      nodeAndEdgeSets.nodeSet[toTiddlerTitle].shape = "circle";
+      console.log(nodeAndEdgeSets.nodeSet[toTiddlerTitle]);
+    }
+
+// > $tw.wiki.filterTiddlers("[is[current]links[]]","TiddlerTwo");
+// [ 'TiddlerFour' ]
+// > $tw.wiki.filterTiddlers("[links[]]","TiddlerTwo");
+// [ 'ShowGraph',
+//   'ShowTimelineDemo',
+//   'TiddlerTwo',
+//   'MissingTiddler',
+//   'TiddlerFour' ]
+    debugger;
     // Forward links
-    addNodes(linksFilter, "link", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
+    addNodes(linksFilter, "link", toTiddlerTitle, nodeAndEdgeSets, depth, maxDepth);
     // Forward links though list
-    addNodes(listFilter, "list", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
+    addNodes(listFilter, "list", toTiddlerTitle, nodeAndEdgeSets, depth, maxDepth);
     // Forward links though tag
-    addNodes(tagsFilter, "tag", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
+    addNodes(tagsFilter, "tag", toTiddlerTitle, nodeAndEdgeSets, depth, maxDepth);
     // Backlinks
-    addNodes(backlinksFilter, "backlink", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
+    addNodes(backlinksFilter, "backlink", toTiddlerTitle, nodeAndEdgeSets, depth, maxDepth);
     // Backlinks though listed
-    addNodes(taggingFilter, "listed", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
+    addNodes(listedFilter, "listed", toTiddlerTitle, nodeAndEdgeSets, depth, maxDepth);
     // Backlinks though tags
-    addNodes(taggingFilter, "tagging", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
-    return nodeSetAndEdges;
+    addNodes(taggingFilter, "tagging", toTiddlerTitle, nodeAndEdgeSets, depth, maxDepth);
+    return nodeAndEdgeSets;
   }
 
   function displayTiddler(self,toTiddlerTitle,fromTiddlerTitle){
@@ -151,27 +206,9 @@ module-type: widget
 
   GraphWidget.prototype.createGraph = function(holderDiv) { 
 
-    var tiddlers = $tw.wiki.filterTiddlers("[is[current]listed[]]","TiddlerFour");
-    console.log(tiddlers);
-    tiddlers = $tw.wiki.filterTiddlers("[listed[TiddlerFour]]","TiddlerFour");
-    console.log(tiddlers);
-    var tiddlers = $tw.wiki.filterTiddlers("[is[current]list[]]","TiddlerOne");
-    console.log(tiddlers);
-    tiddlers = $tw.wiki.filterTiddlers("[list[TiddlerOne]]","TiddlerOne");
-    console.log(tiddlers);
-    var nodeSetAndEdges = buildNodeSetAndEdges({nodeSet: {}, edges: []},null, null, this.tiddler,1,5);
-
-    var nodes = [];
-    for (var key in nodeSetAndEdges.nodeSet) {
-      if (nodeSetAndEdges.nodeSet.hasOwnProperty(key)) {
-        nodes.push(nodeSetAndEdges.nodeSet[key]);
-      }
-    }
-    
-    console.log(nodes);
     var data= {
-      nodes: nodes,
-      edges: nodeSetAndEdges.edges,
+      nodes: [],
+      edges: []
     };
     var options = {};
     // this.document === $tw.fakeDocument for test mode
@@ -181,21 +218,53 @@ module-type: widget
       this.graph = this.parentWidget.parentWidget.mockGraph;
     }
     var self = this;
-    this.graph.on('doubleClick', function(properties) {
-      // Check if background or a tiddler is selected
-      if (properties.nodes.length !== 0) {
-        self.tiddler = properties.nodes[0];
-        self.createGraph(holderDiv);
+    var nodeAndEdgeSets = buildNodeAndEdgeSets({nodeSet: {}, edgeSet: {}},null, null, this.tiddler,1,this.maxDepth);
+
+    var nodes = [];
+    for (var key in nodeAndEdgeSets.nodeSet) {
+      if (nodeAndEdgeSets.nodeSet.hasOwnProperty(key)) {
+        nodes.push(nodeAndEdgeSets.nodeSet[key]);
       }
-    });
+    }
+    
+    var edges = [];
+    for (key in nodeAndEdgeSets.edgeSet) {
+      if (nodeAndEdgeSets.edgeSet.hasOwnProperty(key)) {
+        edges.push(nodeAndEdgeSets.edgeSet[key]);
+      }
+    }
+    
+    data= {
+      nodes: nodes,
+      edges: edges
+    };
+    this.graph.setData(data);
     this.graph.on('click', function(properties) {
-      // Check if background or a tiddler is selected
+      // Check if node is selected
+      console.log("doubleClick");
       if (properties.nodes.length !== 0) {
         var toTiddlerTitle = properties.nodes[0];
         var fromTiddlerTitle = self.getVariable("currentTiddler");
         displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
       }
     });
+    this.graph.on('doubleClick', function(properties) {
+      // Check if node is selected
+      console.log("click");
+      if (properties.nodes.length !== 0) {
+        self.tiddler = properties.nodes[0];
+        self.createGraph(holderDiv);
+      }
+    });
+    // this.graph.on('select', function(properties) {
+    //   console.log("select");
+    //   // Check if node is selected
+    //   if (properties.nodes.length !== 0) {
+    //     var toTiddlerTitle = properties.nodes[0];
+    //     var fromTiddlerTitle = self.getVariable("currentTiddler");
+    //     displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
+    //   }
+    // });
   };
 
 
