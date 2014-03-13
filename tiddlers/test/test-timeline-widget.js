@@ -99,7 +99,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should render from a tiddlerList and default startDateField, setting start range to lowest", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline tiddler="AListTiddler"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="[list[AListTiddler]]"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([ 
           { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,15), type : 'point' },
@@ -113,7 +113,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should set the a given custom time", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline tiddler="AListTiddler" customTime="20140201"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="[list[AListTiddler]]" customTime="20140201"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([ 
           { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,15), type : 'point' },
@@ -125,12 +125,12 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         expect(mockTimeline.setGroups).not.toHaveBeenCalled();
       });
 
-      it("should render from an non-existent tiddlerList", function() {
+      it("should render using default filter and start date", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline startDateField="created"/>');
+        createAndRenderWidgetNode('<$visjstimeline/>');
         // Test the rendering
-        expect(mockTimeline.setItems).toHaveBeenCalledWith([  ]);
-        expect(mockTimeline.setWindow).toHaveBeenCalledWith(undefined, undefined);
+        // Should find 16 non system tiddlers to show
+        expect(mockTimeline.setItems.argsForCall[0][0].length).toBe(16);
         expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
         expect(mockTimeline.on).toHaveBeenCalled();
         expect(mockTimeline.setGroups).not.toHaveBeenCalled();

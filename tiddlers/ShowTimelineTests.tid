@@ -8,13 +8,13 @@ type: text/vnd.tiddlywiki
 <$visjstimeline filter="TiddlerTwo GettingStartedzzzz" madeUpAttr="created"/>
 
 !!should render from a tiddlerList and default startDateField, setting start range to lowest
-<$visjstimeline tiddler="AListTiddler"/>
+<$visjstimeline filter="[list[AListTiddler]]"/>
 
 !!should set the a given custom time
-<$visjstimeline tiddler="AListTiddler" customTime="20140201"/>
+<$visjstimeline filter="[list[AListTiddler]]" customTime="20140201"/>
 
-!!should render from an non-existent tiddlerList
-<$visjstimeline startDateField="created"/>
+!!should render using default filter and start date
+<$visjstimeline/>
 
 !!should handle a nonsensical filter, giving no timepoints
 <$visjstimeline filter="[rubbish" startDateField="modified"/>

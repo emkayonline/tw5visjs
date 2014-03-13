@@ -86,8 +86,7 @@ module-type: widget
 
   TimelineWidget.prototype.execute = function() {
     var attrParseWorked = this.parseWidgetAttributes({
-      filter:        {  type: "string", defaultValue: undefined},
-           tiddler:       {   type: "string", defaultValue: this.getVariable("currentTiddler")},
+      filter:        {  type: "string", defaultValue: "[!is[system]]"},
            groupField: { type: "string", defaultValue: undefined},
            startDateField: { type: "string", defaultValue: "created"},
            endDateField:  { type: "string", defaultValue: undefined},
@@ -103,19 +102,11 @@ module-type: widget
 
   TimelineWidget.prototype.getTimepointList = function(changedTiddlers) {
     var optionList = [];
-    if(this.filter) {
-      // process the filter into an array of tiddler titles
-      optionList = this.compiledFilter.call(null, changedTiddlers, this.tiddler);
-      // If filter is a list of tiddlers it will return tiddlers even if they are not in changed Tiddlers
-      if (changedTiddlers !== undefined) {
-        optionList = optionList.filter(function (e) { return changedTiddlers[e];});
-      }
-    }  else {
-      // process either the given, or the current tiddler as a list tiddler
-      optionList = this.wiki.getTiddlerList(this.tiddler);
-      if (changedTiddlers !== undefined) {
-        optionList = optionList.filter(function (e) { return changedTiddlers[e];});
-      }
+    // process the filter into an array of tiddler titles
+    optionList = this.compiledFilter.call(null, changedTiddlers, this.tiddler);
+    // If filter is a list of tiddlers it will return tiddlers even if they are not in changed Tiddlers
+    if (changedTiddlers !== undefined) {
+      optionList = optionList.filter(function (e) { return changedTiddlers[e];});
     }
     var self = this;
     var withoutDraftsList = optionList.filter(function(optionTitle) {
