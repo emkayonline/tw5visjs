@@ -5,7 +5,7 @@ type: text/vnd.tiddlywiki
 
 !!Report unexpected attributes
 
-<$visjstimeline list="TiddlerTwo GettingStartedzzzz" madeUpAttr="created"/>
+<$visjstimeline filter="TiddlerTwo GettingStartedzzzz" madeUpAttr="created"/>
 
 !!should render from a tiddlerList and default startDateField, setting start range to lowest
 <$visjstimeline tiddler="AListTiddler"/>
@@ -24,45 +24,45 @@ type: text/vnd.tiddlywiki
 <$visjstimeline filter="[prefix[Tiddler]]" startDateField="modified"/>
 
 
-!!should render from a list attribute
-<$visjstimeline list="TiddlerOne TiddlerTwo" startDateField="created"/>
+!!should render from a filter attribute specifying a list
+<$visjstimeline filter="TiddlerOne TiddlerTwo" startDateField="created"/>
 
 
-!!should skip any unknown tiddlers in a list attribute
-<$visjstimeline list="TiddlerOne UnknownTiddler" startDateField="created"/>
+!!should skip any unknown tiddlers in a filter list 
+<$visjstimeline filter="TiddlerOne UnknownTiddler" startDateField="created"/>
 
 
 !!should group tiddlers based on an attribute
-<$visjstimeline list="TiddlerOne TiddlerTwo TiddlerThree" groupField="mygroup" />
+<$visjstimeline filter="TiddlerOne TiddlerTwo TiddlerThree" groupField="mygroup" />
 
 
 !!should provide default grouping when field missing
-<$visjstimeline list="TiddlerOne TiddlerTwo TiddlerThree" groupField="unknowngroup" />
+<$visjstimeline filter="TiddlerOne TiddlerTwo TiddlerThree" groupField="unknowngroup" />
 
 
 !!should handle tiddlers with textual dates with specified format
-<$visjstimeline list="TiddlerOne TiddlerThree" startDateField="born" format="YYYY MMM"/>
+<$visjstimeline filter="TiddlerOne TiddlerThree" startDateField="born" format="YYYY MMM"/>
 
 
 !!should skip tiddlers with unparsable startDateField
-<$visjstimeline list="IgnoredTiddler" startDateField="born" format="YYYY MMM"/>
+<$visjstimeline filter="IgnoredTiddler" startDateField="born" format="YYYY MMM"/>
 
 
 !!should skip tiddlers missing the startDateField
-<$visjstimeline list="TiddlerThree TiddlerFour" startDateField="born" format="YYYY MMM"/>
+<$visjstimeline filter="TiddlerThree TiddlerFour" startDateField="born" format="YYYY MMM"/>
 
 
 !!should set tiddlers as range timepoints when using endDateField
-<$visjstimeline list="TiddlerThree" startDateField="born" endDateField="died" format="YYYY MMM"/>
+<$visjstimeline filter="TiddlerThree" startDateField="born" endDateField="died" format="YYYY MMM"/>
 
 
 !!should set tiddlers as point timepoints when start date matches end date (and set max correctly)
-<$visjstimeline list="TiddlerFour TiddlerThree" startDateField="created" endDateField="modified"/>
+<$visjstimeline filter="TiddlerFour TiddlerThree" startDateField="created" endDateField="modified"/>
 
 
 !!should set tiddlers as point timepoints when missing endDateField
-<$visjstimeline list="TiddlerTwo TiddlerThree" startDateField="born" endDateField="died" format="YYYY MMM"/>
+<$visjstimeline filter="TiddlerTwo TiddlerThree" startDateField="born" endDateField="died" format="YYYY MMM"/>
 
 !!should handle years as dates from a long time ago
-<$visjstimeline list="OldTiddler" startDateField="born" format="YYYY"/>
+<$visjstimeline filter="OldTiddler" startDateField="born" format="YYYY"/>
 

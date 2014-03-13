@@ -12,7 +12,7 @@ This plugin required TW5 version 5.0.8-beta or later.
 
 ! Content and Attributes
 
-A list of tiddlers is specified using either a filter, list or tiddler list field.  
+A list of tiddlers is specified using either a filter or tiddler list field.  
 
 Each matching tiddler is shown on the timeline using it's specified start date and end date fields.  The start date defaults to the 'created' field and the end date is optional.
 
@@ -20,8 +20,7 @@ Validate date format on tiddlers: By default dates are parsed using the TiddlyWi
 
 |!Attribute|!Description |
 |filter|The TiddlerFilter used to generate the list of tiddlers to display|
-|list|Instead of a filter, a list of tiddlers can be specified |
-|tiddler|Instead of a filter or a specified list, this specifies a tiddler whose ListField is to be used|
+|tiddler|Instead of a filter, this specifies a tiddler whose ListField is to be used|
 |startDateField|A field on each tiddler that defines the start date of a tiddler in the timeline (defaults to the 'created' field)|
 |endDateField|A field on each tiddler that defines the end date of a tiddler in the timeline.  This attribute is optional. |
 |format|The format for parsing the dates, using the moment.js [[Parse string+format|http://momentjs.com/docs/#/parsing/string-format/]].  If no format is specified the TiddlyWiki default date parser is used.|

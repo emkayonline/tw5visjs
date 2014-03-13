@@ -87,7 +87,6 @@ module-type: widget
   TimelineWidget.prototype.execute = function() {
     var attrParseWorked = this.parseWidgetAttributes({
       filter:        {  type: "string", defaultValue: undefined},
-           list:        {  type: "string", defaultValue: undefined},
            tiddler:       {   type: "string", defaultValue: this.getVariable("currentTiddler")},
            groupField: { type: "string", defaultValue: undefined},
            startDateField: { type: "string", defaultValue: "created"},
@@ -107,13 +106,11 @@ module-type: widget
     if(this.filter) {
       // process the filter into an array of tiddler titles
       optionList = this.compiledFilter.call(null, changedTiddlers, this.tiddler);
-    } else if(this.list) {
-      // parse the given list into an array
-      optionList = $tw.utils.parseStringArray(this.list);
-      if (changedTiddlers !== undefined) {  
+      // If filter is a list of tiddlers it will return tiddlers even if they are not in changed Tiddlers
+      if (changedTiddlers !== undefined) {
         optionList = optionList.filter(function (e) { return changedTiddlers[e];});
       }
-    } else {
+    }  else {
       // process either the given, or the current tiddler as a list tiddler
       optionList = this.wiki.getTiddlerList(this.tiddler);
       if (changedTiddlers !== undefined) {
@@ -137,6 +134,7 @@ module-type: widget
      Selectively refreshes the widget if needed. Returns true if the widget or any of its children needed re-rendering
      */
   TimelineWidget.prototype.refresh = function(changedTiddlers) {
+    debugger;
     var changedAttributes = this.computeAttributes();
     if(changedAttributes.filter || changedAttributes.startDateField || changedAttributes.endDateField || changedAttributes.groupField) {
       this.refreshSelf();

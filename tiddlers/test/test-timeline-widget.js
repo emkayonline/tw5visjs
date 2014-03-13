@@ -84,7 +84,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should report unexpected attributes", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerTwo GettingStartedzzzz" madeUpAttr="created"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerTwo GettingStartedzzzz" madeUpAttr="created"/>');
         // Test the rendering
         expect(wrapper.innerHTML).toBe("<p><div class='widget-error'>visjstimeline: Unexpected attribute(s) madeUpAttr</div></p>");
         expect(mockTimeline.setItems).not.toHaveBeenCalled();
@@ -164,9 +164,9 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         expect(mockTimeline.setGroups).not.toHaveBeenCalled();
       });
 
-      it("should render from a list attribute", function() {
+      it("should render from a filter attribute listing tiddlers ", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerOne TiddlerTwo" startDateField="created"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo" startDateField="created"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point' },
@@ -177,9 +177,9 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         expect(mockTimeline.setGroups).not.toHaveBeenCalled();
       });
 
-      it("should skip any unknown tiddlers in a list attribute", function() {
+      it("should skip any unknown tiddlers in a filter list", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerOne UnknownTiddler" startDateField="created"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne UnknownTiddler" startDateField="created"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([{ id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point' }]);
         expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,2,13), undefined);
@@ -191,7 +191,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should group tiddlers based on an attribute", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerOne TiddlerTwo TiddlerThree" groupField="mygroup" />');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo TiddlerThree" groupField="mygroup" />');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point', group: 'people' },
@@ -205,7 +205,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should provide default grouping when field missing", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerOne TiddlerTwo TiddlerThree" groupField="unknowngroup" />');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo TiddlerThree" groupField="unknowngroup" />');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point', group: 'Global' },
@@ -219,7 +219,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should handle tiddlers with textual dates with specified format", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerOne TiddlerThree" startDateField="born" format="YYYY MMM"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerThree" startDateField="born" format="YYYY MMM"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(1966,8,1), type : 'point' },
@@ -232,7 +232,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should skip tiddlers with unparsable startDateField", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="IgnoredTiddler" startDateField="born" format="YYYY MMM"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="IgnoredTiddler" startDateField="born" format="YYYY MMM"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([]);
         expect(mockTimeline.setWindow).toHaveBeenCalledWith(undefined, undefined);
@@ -244,7 +244,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should skip tiddlers missing the startDateField", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerThree TiddlerFour" startDateField="born" format="YYYY MMM"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerThree TiddlerFour" startDateField="born" format="YYYY MMM"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerThree', content : 'TiddlerThree', start : new Date(1971,11,1), type : 'point' }]);
@@ -257,7 +257,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should set tiddlers as range timepoints when using endDateField", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerThree" startDateField="born" endDateField="died" format="YYYY MMM"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerThree" startDateField="born" endDateField="died" format="YYYY MMM"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerThree', content : 'TiddlerThree', start : new Date(1971,11,1), end : new Date(2071,11,1), type : 'range' }]);
@@ -269,7 +269,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should set tiddlers as point timepoints when start date matches end date (and set max correctly)", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerFour TiddlerThree" startDateField="created" endDateField="modified"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerFour TiddlerThree" startDateField="created" endDateField="modified"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerFour', content : 'TiddlerFour', start : new Date(2014,2,23), end : new Date(2014,2,23), type : 'point' },
@@ -282,7 +282,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should set tiddlers as point timepoints when missing endDateField", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerTwo TiddlerThree" startDateField="born" endDateField="died" format="YYYY MMM"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerTwo TiddlerThree" startDateField="born" endDateField="died" format="YYYY MMM"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(1970,4,1), type : 'point' },
@@ -296,7 +296,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should handle years as dates from a long time ago", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="OldTiddler" startDateField="born" format="YYYY"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="OldTiddler" startDateField="born" format="YYYY"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'OldTiddler', content : 'OldTiddler', start : new Date(1761,0,1), type : 'point' }]);
@@ -309,7 +309,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should refresh when an included tiddler changes", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerOne TiddlerTwo" startDateField="modified"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo" startDateField="modified"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,14), type : 'point' },
@@ -332,7 +332,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should not refresh when an irrelevant tiddler is changed", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline list="TiddlerOne TiddlerTwo" startDateField="created"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo" startDateField="created"/>');
         // Test the rendering
         expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point' },
