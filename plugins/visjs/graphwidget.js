@@ -21,6 +21,8 @@ module-type: widget
 
   var backlinksFilter = $tw.wiki.compileFilter("[is[current]backlinks[]]");
   var linksFilter = $tw.wiki.compileFilter("[is[current]links[]]");
+  var listFilter = $tw.wiki.compileFilter("[is[current]list[]]");
+  var listedFilter = $tw.wiki.compileFilter("[is[current]listed[]]");
   var tagsFilter = $tw.wiki.compileFilter("[is[current]tags[]]");
   var taggingFilter = $tw.wiki.compileFilter("[is[current]tagging[]]");
 
@@ -119,10 +121,14 @@ module-type: widget
 
     // Forward links
     addNodes(linksFilter, "link", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
+    // Forward links though list
+    addNodes(listFilter, "list", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
     // Forward links though tag
     addNodes(tagsFilter, "tag", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
     // Backlinks
     addNodes(backlinksFilter, "backlink", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
+    // Backlinks though listed
+    addNodes(taggingFilter, "listed", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
     // Backlinks though tags
     addNodes(taggingFilter, "tagging", currTiddlerTitle, nodeSetAndEdges, depth, maxDepth);
     return nodeSetAndEdges;
@@ -130,6 +136,10 @@ module-type: widget
 
   GraphWidget.prototype.createGraph = function(holderDiv) { 
 
+    var tiddlers = $tw.wiki.filterTiddlers("[is[current]list[]]","TiddlerOne");
+    console.log(tiddlers);
+    tiddlers = $tw.wiki.filterTiddlers("[list[TiddlerOne]]","TiddlerOne");
+    console.log(tiddlers);
     var nodeSetAndEdges = buildNodeSetAndEdges({nodeSet: {}, edges: []},null, null, this.tiddler,1,3);
 
     var nodes = [];
@@ -137,9 +147,8 @@ module-type: widget
       if (nodeSetAndEdges.nodeSet.hasOwnProperty(key)) {
         nodes.push(nodeSetAndEdges.nodeSet[key]);
       }
-    };
+    }
     
-    debugger;
 
     var data= {
       nodes: nodes,
