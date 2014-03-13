@@ -125,13 +125,17 @@ module-type: widget
      Selectively refreshes the widget if needed. Returns true if the widget or any of its children needed re-rendering
      */
   TimelineWidget.prototype.refresh = function(changedTiddlers) {
-    debugger;
     var changedAttributes = this.computeAttributes();
     if(changedAttributes.filter || changedAttributes.startDateField || changedAttributes.endDateField || changedAttributes.groupField) {
       this.refreshSelf();
       this.updateTimeline();
       return true;
     } 
+    debugger;
+    if (this.displayedTiddlers.some(function (e) { return changedTiddlers[e.id]; })) {
+      this.updateTimeline();
+      return true;
+    }
     var anyRelevantChanges = this.getTimepointList(changedTiddlers);
     if (anyRelevantChanges.length !== 0) {
       this.updateTimeline();
@@ -237,6 +241,7 @@ module-type: widget
     var self = this;
     var timepointList = this.getTimepointList();
     var result = timepointList.reduce(addTimeData(self), {data: [], groups: {}, errors: []});
+    this.displayedTiddlers = result.data;
     this.timeline.setItems(result.data);
     var options = {showCustomTime: true};
     this.timeline.setOptions(options);

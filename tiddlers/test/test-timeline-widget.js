@@ -330,6 +330,80 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
       }
       );
 
+      it("should refresh when an included tiddler changes and excludes itself from the filter", function() {
+        // Construct the widget node
+        createAndRenderWidgetNode('<$visjstimeline filter="[tag[testTiddler]]" startDateField="modified"/>');
+        // Test the rendering
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([ 
+          { id: 'TiddlerFour', content: 'TiddlerFour', start: new Date(2014,2,23), type: 'point' },
+          { id: 'TiddlerOne', content: 'TiddlerOne', start: new Date(2014,2,14), type: 'point' },
+          { id: 'TiddlerThree', content: 'TiddlerThree', start: new Date(2014,2,22), type: 'point' },
+          { id: 'TiddlerTwo', content: 'TiddlerTwo', start: new Date(2014,2,16), type: 'point' }
+          ]);
+        expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,2,14), undefined);
+        expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
+        expect(mockTimeline.on).toHaveBeenCalled();
+        expect(mockTimeline.setGroups).not.toHaveBeenCalled();
+        // Change the transcluded tiddler - remove it's tag so it won't match the filter
+        wiki.addTiddler({title: "TiddlerFour", created: new Date(2014,2,23), modified: new Date(2014,2,23), text: "Modified and created match"});
+        // Refresh
+        refreshWidgetNode(["TiddlerFour"]);
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
+          { id: 'TiddlerOne', content: 'TiddlerOne', start: new Date(2014,2,14), type: 'point' },
+          { id: 'TiddlerThree', content: 'TiddlerThree', start: new Date(2014,2,22), type: 'point' },
+          { id: 'TiddlerTwo', content: 'TiddlerTwo', start: new Date(2014,2,16), type: 'point' }
+          ]);
+        expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,2,14), undefined);
+        expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
+      }
+      );
+
+
+
+      it("should refresh when an included tiddler changes", function() {
+        // Construct the widget node
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo" startDateField="modified"/>');
+        // Test the rendering
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
+          { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,14), type : 'point' },
+          { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,16), type : 'point' } ]);
+        expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,2,14), undefined);
+        expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
+        expect(mockTimeline.on).toHaveBeenCalled();
+        expect(mockTimeline.setGroups).not.toHaveBeenCalled();
+        // Change the transcluded tiddler
+        wiki.addTiddler({title: "TiddlerTwo", created: new Date(2014,1,15), modified: new Date(2014,1,31), text: "More stuff"});
+        // Refresh
+        refreshWidgetNode(["TiddlerTwo"]);
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
+          { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,14), type : 'point' },
+          { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,1,31), type : 'point' } ]);
+        expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,1,31), undefined);
+        expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
+      }
+      );
+      it("should refresh when an included tiddler changes", function() {
+        // Construct the widget node
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo" startDateField="modified"/>');
+        // Test the rendering
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
+          { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,14), type : 'point' },
+          { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,16), type : 'point' } ]);
+        expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,2,14), undefined);
+        expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
+        expect(mockTimeline.on).toHaveBeenCalled();
+        expect(mockTimeline.setGroups).not.toHaveBeenCalled();
+        // Change the transcluded tiddler
+        wiki.addTiddler({title: "TiddlerTwo", created: new Date(2014,1,15), modified: new Date(2014,1,31), text: "More stuff"});
+        // Refresh
+        refreshWidgetNode(["TiddlerTwo"]);
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
+          { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,14), type : 'point' },
+          { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,1,31), type : 'point' } ]);
+        expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,1,31), undefined);
+        expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
+      }
+      );
       it("should not refresh when an irrelevant tiddler is changed", function() {
         // Construct the widget node
         createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo" startDateField="created"/>');
