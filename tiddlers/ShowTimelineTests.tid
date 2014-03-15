@@ -68,3 +68,5 @@ type: text/vnd.tiddlywiki
 !!Should report an error when start date is before end date
 <$visjstimeline filter="[list[MisorderedTiddler]]"  startDateField="born" endDateField="died" format="YYYY MMM"/>
 
+!!it should handle 'now' as current date for date values
+<$visjstimeline filter="UptodateTiddler" startDateField="born" endDateField="died" format="YYYY MMM"/>

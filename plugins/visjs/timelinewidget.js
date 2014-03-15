@@ -70,7 +70,7 @@ module-type: widget
       if (attributeDefns[attr] === undefined) {
         errors.push(attr);
       } else {
-        this[attr] = this.attributes[attr];
+        this[attr] = this.attributes[attr].trim();
       }
     }
     if (errors.length !== 0) {
@@ -176,6 +176,10 @@ module-type: widget
   };
 
   function dateFieldToDate(dateField, dateFormat) {
+    dateField = dateField.trim();
+    if (dateField === "now") {
+      return new Date();
+    }
     if (dateField !== "") {
       if (dateFormat === undefined) {
         return $tw.utils.parseDate(dateField);
