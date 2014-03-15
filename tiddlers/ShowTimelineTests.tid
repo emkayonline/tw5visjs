@@ -19,7 +19,6 @@ type: text/vnd.tiddlywiki
 !!should handle a nonsensical filter, giving no timepoints
 <$visjstimeline filter="[rubbish" startDateField="modified"/>
 
-
 !!should render with a specified filter and startDateField
 <$visjstimeline filter="[prefix[Tiddler]]" startDateField="modified"/>
 
@@ -65,4 +64,7 @@ type: text/vnd.tiddlywiki
 
 !!should handle years as dates from a long time ago
 <$visjstimeline filter="OldTiddler" startDateField="born" format="YYYY"/>
+
+!!Should report an error when start date is before end date
+<$visjstimeline filter="[list[MisorderedTiddler]]"  startDateField="born" endDateField="died" format="YYYY MMM"/>
 

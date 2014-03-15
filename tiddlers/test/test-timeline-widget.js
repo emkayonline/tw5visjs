@@ -130,7 +130,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         createAndRenderWidgetNode('<$visjstimeline/>');
         // Test the rendering
         // Should find 16 non system tiddlers to show
-        expect(mockTimeline.setItems.argsForCall[0][0].length).toBe(16);
+        expect(mockTimeline.setItems.argsForCall[0][0].length).toBe(17);
         expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
         expect(mockTimeline.on).toHaveBeenCalled();
         expect(mockTimeline.setGroups).not.toHaveBeenCalled();
@@ -306,6 +306,21 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         expect(mockTimeline.setGroups).not.toHaveBeenCalled();
       });
 
+
+      it("Should report an error when start date is before end date", function() {
+        // Construct the widget node
+        debugger;
+        createAndRenderWidgetNode('<$visjstimeline filter="MisorderedTiddler"  startDateField="born" endDateField="died" format="YYYY MMM"/>');
+        // Test the rendering
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
+          { id : 'MisorderedTiddler', content : 'MisorderedTiddler', start : new Date(2071,11,1), type : 'point' }
+           ]);
+        expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2071,11,1), undefined);
+        expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
+        expect(mockTimeline.on).toHaveBeenCalled();
+        expect(mockTimeline.setGroups).not.toHaveBeenCalled();
+        expect(wrapper.innerHTML).toBe("<p><div class='widget-error'>visjstimeline: End date (1971 December) on MisorderedTiddler.died is before start date (2071 December) on MisorderedTiddler.born</div><div></div></p>");
+      });
 
       it("should refresh when an included tiddler changes", function() {
         // Construct the widget node

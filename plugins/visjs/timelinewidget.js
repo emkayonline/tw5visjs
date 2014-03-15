@@ -101,15 +101,15 @@ module-type: widget
   };
 
   TimelineWidget.prototype.getTimepointList = function(changedTiddlers) {
-    var optionList = [];
+    var tiddlerList = [];
     // process the filter into an array of tiddler titles
-    optionList = this.compiledFilter.call(null, changedTiddlers, this.tiddler);
+    tiddlerList = this.compiledFilter.call(null, changedTiddlers, this.tiddler);
     // If filter is a list of tiddlers it will return tiddlers even if they are not in changed Tiddlers
     if (changedTiddlers !== undefined) {
-      optionList = optionList.filter(function (e) { return changedTiddlers[e];});
+      tiddlerList = tiddlerList.filter(function (e) { return changedTiddlers[e];});
     }
     var self = this;
-    var withoutDraftsList = optionList.filter(function(optionTitle) {
+    var withoutDraftsList = tiddlerList.filter(function(optionTitle) {
       var optionTiddler = self.wiki.getTiddler(optionTitle);
       if (optionTiddler === undefined) {
         // tiddler may not exist if list attribute provided to widget, so exclude
@@ -131,7 +131,6 @@ module-type: widget
       this.updateTimeline();
       return true;
     } 
-    debugger;
     if (this.displayedTiddlers.some(function (e) { return changedTiddlers[e.id]; })) {
       this.updateTimeline();
       return true;
@@ -217,9 +216,13 @@ module-type: widget
             var endDate = dateFieldToDate(tiddlerEndDate, self.format);
             if (!isNaN(endDate)) {
               // newTimepoint.end = $tw.utils.formatDateString(endDate, "YYYY-0MM-0DD");
-              newTimepoint.end = endDate;
-              if (newTimepoint.end.getTime() != newTimepoint.start.getTime()) {
-                newTimepoint.type = 'range';
+              if (endDate < startDate) {
+                currentErrors.push("End date ("+tiddlerEndDate+") on "+tiddlerName+"."+self.endDateField+" is before start date ("+tiddlerStartDate+") on "+tiddlerName+"."+self.startDateField);
+              } else {
+                newTimepoint.end = endDate;
+                if (newTimepoint.end.getTime() != newTimepoint.start.getTime()) {
+                  newTimepoint.type = 'range';
+                }
               }
             } else {
               currentErrors.push("Not a endDate ("+tiddlerEndDate+") on "+tiddlerName+"."+self.endDateField);
