@@ -1,0 +1,24 @@
+title: $:/plugins/emkay/visjs/graphhelp
+tags: [[$:/tags/help]]
+type: text/vnd.tiddlywiki
+
+! Introduction
+
+This widget shows a set of tiddlers as a series of ndoes and edges on a graph.
+
+! Content and Attributes
+
+The graph is specified using a starting tiddler.  From that tiddler the links, list field and tags are traversed to show the relationship to other tiddlers in the wiki.  The inverse of these relationships is also traversed (i.e. backlinks, listed and tagging).
+
+
+|!Attribute|!Description |
+|tiddler|The starting tiddler for the graph.  Defaults to the current tiddler.|
+|maxDepth|The maximum number of levels away from the starting tiddler to traverse.  Defaults to 3.|
+
+The content of the `<$visjsgraph>` widget is ignored.
+
+! Example Usage
+
+Show a graph, starting at TiddlerOne and traversing a maximum of 4 levels away from TiddlerOne.
+
+`<$visjsgraph tiddler="TiddlerOne" maxDepth="4"/>`

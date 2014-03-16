@@ -107,9 +107,9 @@ module-type: widget
       }
       if (startingNode) {
         nodeSet[tiddlerTitle].shape = "circle";
-      if (!tiddler.fields.color) {
-        nodeSet[tiddlerTitle].color = "DodgerBlue";
-      }
+        if (!tiddler.fields.color) {
+          nodeSet[tiddlerTitle].color = "DodgerBlue";
+        }
       }
     }
   }

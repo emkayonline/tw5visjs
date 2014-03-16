@@ -4,41 +4,16 @@ type: text/vnd.tiddlywiki
 
 ! Introduction
 
-The vis.js widget provides features of the [[vis.js|http://visjs.org]] Timeline library.  This allows a set of tiddlers to be shown on a graphical timeline.
+The vis.js widget provides access tothe features of the [[vis.js|http://visjs.org]] library.  This allows a set of tiddlers to be shown on a graphical timeline or in graph (consisting of nodes and edges).
 
 ! Requirements
 
 This plugin required TW5 version 5.0.8-beta or later.
 
-! Content and Attributes
+! Widgets
 
-A list of tiddlers is specified using filter.
+The plugin provides two widgets
 
-Each matching tiddler is shown on the timeline using it's specified start date and end date fields.  The start date defaults to the 'created' field and the end date is optional.
+# [[Timeline Widget|$:/plugins/emkay/visjs/timelinehelp]]
+# [[Graph Widget|$:/plugins/emkay/visjs/graphhelp]]
 
-!! Validate date format on tiddlers
-* By default dates are parsed using the TiddlyWiki date parser (which will handle the 'created' and 'modified' fields)
-* An override date format can be specified. 
-* This format will apply to both the start and end dates.  
-* Additionally the start date or end date field on a tiddler can be set to the word "now", this will set that date in the timeline to the current date and time when the timeline is displayed.
-
-|!Attribute|!Description |
-|filter|The TiddlerFilter used to generate the list of tiddlers to display, by default it selects all non system tiddlers|
-|startDateField|A field on each tiddler that defines the start date of a tiddler in the timeline (defaults to the 'created' field)|
-|endDateField|A field on each tiddler that defines the end date of a tiddler in the timeline.  This attribute is optional. |
-|format|The format for parsing the dates, using the moment.js [[Parse string+format|http://momentjs.com/docs/#/parsing/string-format/]].|
-|groupField|A field whose value will be used to group tiddlers on the timeline|
-|customTime|A date at which a vertical bar will be shown on the timeline (In the format YYYYMMDD)|
-
-The content of the `<$visjstimeline>` widget is ignored.
-
-! Example Usage
-
-Show all non-system tiddlers, using their created date as the start date:
-
-`<$visjstimeline/>`
-
-
-Show all Tiddlers with a name starting 'Tiddler', using the born and died fields with a custom format:
-
-`<$visjstimeline filter="[prefix[Tiddler]]" startDateField="born" endDateField="died" format="YYYY MMM"/>`

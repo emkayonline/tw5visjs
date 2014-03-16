@@ -1,6 +1,6 @@
 # TiddlyWiki 5 vis.js plug-in
 
-This plug-in allows TW5 to display tiddlers using the [vis.js](http://visjs.org) graphical timeline.  
+This plug-in allows TW5 to display tiddlers using the [vis.js](http://visjs.org) graphical timeline and graph widgets.
 
 This plug-in has been testing on OS X with Safari, Chrome and Firefox, but should work under all operating systems and browser supported by TW5 and vis.js.
 
@@ -14,7 +14,7 @@ This plugin requires TiddlyWiki 5.0.8-beta or later.
 
 A demonstration of the wiki can be see at this projects [demo wiki](http://emkayonline.github.io/tw5visjs).
 
-To see the timeline in action,  view the tiddler called ShowTimelineDemo.  This shows the timeline for construction of The Seven Wonders of the Waterways (Based on the original list by Robert Aickman).
+To see the timeline in action,  view the tiddler called ShowTimelineDemo.  To view the graph in action, view the tiddler ShowGraph.
 
 The timeline is best viewed by increasing the window width in Theme Tweaks in the Appearance section of the ControlPanel.
 
@@ -29,16 +29,10 @@ If you don't wish to clone the source of this plug-in (to edit the code and run 
 *NOTE: For installation of TW5 plug-ins, currently, there seems to be an issue using Safari's drag and drop, so I would recommend Firefox or Chrome.*
 
 1. Open your own wiki in a browser window
-2. In a separate browser window browse to [demo wiki](http://emkayonline.github.io/tw5visjs) and open the ControlPanel 
+2. In a separate browser window browse to [demo wiki](http://emkayonline.github.io/tw5visjs) and open the ControlPanel
 3. In the ControlPanel chose the plugins tag.  From there, drag $:/plugins/emkay/visjs into your wiki.
 4. Save your wiki
 5. Reopen your wiki.
-
-To test the widget in your wiki you may like to create a tiddler with the text:
-  
-    <$visjstimeline filter="[!is[system]]" startDateField="created" endDateField="modified"/>
-
-This will show all your non-system tiddlers on a timeline, with the their start date being their creation dates and end dates being their last modified date.
 
 ## Development
 
@@ -50,15 +44,15 @@ For development and testing I run TiddlyWiki using node.js. See the TW5 node.js 
 
 ### Testing
 
-The plug-in can be tested at the command line using a node installation of TW5.  
+The plug-in can be tested at the command line using a node installation of TW5.
 
 The tests are written using the TW5 jasmine plug-in.
 
 
 To run the command line tests, in the root directory of this project type
-  
+
     tiddlywiki .
-  
+
 This will run all of the command line tests.  This checks all the calculations and transformations work, but does not test the visual part of the plug-in.
 
 #### jasmine patch
@@ -78,14 +72,12 @@ If you do not apply this patch tests will pass when they shouldn't.  You should 
 To run tiddlywiki with the development version of the widget:
 
     tiddlywiki --server
-  
+
 Then navigate to [http://localhost:8080]( http://localhost:8080 )
 
 This wiki has been configured to not save changes to the server.
 
-To see a demo of the timeline widget, view the tiddler called ShowTimelineDemo. 
-
-To run the visual tests, view the tiddler called ShowTimelineTests.  This will show red messages for the cases that test for invalid parameters, formats etc. 
+To run the visual tests, view the tiddler called ShowTimelineTests.  This will show messages for the cases that test for invalid parameters, formats etc.
 
 ## Roadmap
 
