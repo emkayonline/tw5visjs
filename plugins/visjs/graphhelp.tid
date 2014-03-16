@@ -19,6 +19,22 @@ The content of the `<$visjsgraph>` widget is ignored.
 
 ! Node and edge display conventions
 
+The shape and colours of the nodes and edges is defined by the following rules:
+
+!! Nodes
+
+|!Node Type        |!Shape    |!CSS Colour                                                |
+| Starting Tiddler | circle   | Uses tiddler color field if present, otherwise Dodger Blue |
+| Normal Tiddler   | elipse   | Uses tiddler color field if present                       |
+| System Tiddler   | elipse   | Gainsboro                                                 |
+| Missing Tiddler  | triangle | Uses tiddler color field if present                       |
+
+!! Edges
+
+|!Edge Type |!Line Width |!Line Style   |
+| Link      | 2          | Arrow        |
+| List      | 1          | Arrow        |
+| Tag       | 1          | Arrow-center |
 
 ! Example Usage
 
