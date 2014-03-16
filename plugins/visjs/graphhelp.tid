@@ -17,6 +17,9 @@ The graph is specified using a starting tiddler.  From that tiddler the links, l
 
 The content of the `<$visjsgraph>` widget is ignored.
 
+! Node and edge display conventions
+
+
 ! Example Usage
 
 Show a graph, starting at TiddlerOne and traversing a maximum of 4 levels away from TiddlerOne.

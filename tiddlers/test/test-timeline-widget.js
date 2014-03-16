@@ -69,7 +69,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         var f;
         // Reset all the spy functions before propgating the changes
         for (f in widgetNode.mockTimeline) {
-          if (widgetNode.mockTimeline.hasOwnProperty(f)){  
+          if (widgetNode.mockTimeline.hasOwnProperty(f)){
             widgetNode.mockTimeline[f].reset();
           }
         }
@@ -102,7 +102,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo"/>');
         // Test the rendering
         expect(wrapper.innerHTML).toBe("<p><div class='widget-error'></div><div></div></p>");
-        expect(mockTimeline.setItems).toHaveBeenCalledWith([ 
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point' },
           { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,15), type : 'point' }]);
         expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,2,13), undefined);
@@ -117,7 +117,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo" customTime="20140201"/>');
         // Test the rendering
         expect(wrapper.innerHTML).toBe("<p><div class='widget-error'></div><div></div></p>");
-        expect(mockTimeline.setItems).toHaveBeenCalledWith([ 
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point' },
           { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,15), type : 'point' }]);
         expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,2,13), undefined);
@@ -155,7 +155,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         createAndRenderWidgetNode('<$visjstimeline filter="[prefix[Tiddler]]" startDateField="modified"/>');
         // Test the rendering
         expect(wrapper.innerHTML).toBe("<p><div class='widget-error'></div><div></div></p>");
-        expect(mockTimeline.setItems).toHaveBeenCalledWith([ 
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id: 'TiddlerFour', content: 'TiddlerFour', start: new Date(2014,2,23), type: 'point' },
           { id: 'TiddlerOne', content: 'TiddlerOne', start: new Date(2014,2,14), type: 'point' },
           { id: 'TiddlerThree', content: 'TiddlerThree', start: new Date(2014,2,22), type: 'point' },
@@ -381,7 +381,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         createAndRenderWidgetNode('<$visjstimeline filter="[tag[testTiddler]]" startDateField="modified"/>');
         // Test the rendering
         expect(wrapper.innerHTML).toBe("<p><div class='widget-error'></div><div></div></p>");
-        expect(mockTimeline.setItems).toHaveBeenCalledWith([ 
+        expect(mockTimeline.setItems).toHaveBeenCalledWith([
           { id: 'TiddlerFour', content: 'TiddlerFour', start: new Date(2014,2,23), type: 'point' },
           { id: 'TiddlerOne', content: 'TiddlerOne', start: new Date(2014,2,14), type: 'point' },
           { id: 'TiddlerThree', content: 'TiddlerThree', start: new Date(2014,2,22), type: 'point' },

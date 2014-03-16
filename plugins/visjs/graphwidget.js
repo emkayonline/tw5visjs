@@ -17,6 +17,7 @@ module-type: widget
 
   var Widget = require("$:/core/modules/widgets/widget.js").widget;
   var moment = require("$:/plugins/emkay/visjs/moment.js").moment;
+  var utils = require("$:/plugins/emkay/visjs/widgetutils.js");
   var vis = require("$:/plugins/emkay/visjs/vis.js").vis;
 
   var compiledFilters = {
@@ -54,35 +55,8 @@ module-type: widget
     }
   };
 
-  GraphWidget.prototype.parseWidgetAttributes = function(attributeDefns) {
-    var errors = [];
-    for (var attr in this.attributes) {
-      if (attributeDefns[attr] === undefined) {
-        errors.push(attr);
-      } else {
-        if (attributeDefns[attr].type == "string") {
-          this[attr] = this.attributes[attr];
-        } else if (attributeDefns[attr].type == "integer") {
-          this[attr] = parseInt(this.attributes[attr] );
-          if (isNaN(this[attr])) {
-            delete this[attr];
-          }
-        }
-      }
-    }
-    if (errors.length !== 0) {
-      return errors;
-    }
-    for (var attrDefn in attributeDefns) {
-      if (this[attrDefn] === undefined) {
-        this[attrDefn] = attributeDefns[attrDefn].defaultValue;
-      }
-    }
-    return undefined;
-  };
-
   GraphWidget.prototype.execute = function() {
-    var attrParseWorked = this.parseWidgetAttributes({
+    var attrParseWorked = utils.parseWidgetAttributes(this, {
            tiddler:       {   type: "string", defaultValue: this.getVariable("currentTiddler")},
            maxDepth:       {   type: "integer", defaultValue: 3}
            // options:  { type: "flags", defaultValue: undefined}
@@ -187,18 +161,6 @@ module-type: widget
     return nodeAndEdgeSets;
   }
 
-  function displayTiddler(self,toTiddlerTitle,fromTiddlerTitle){
-    var bounds = self.domNodes[0].getBoundingClientRect();
-    var e = {
-      type: "tw-navigate",
-      navigateTo: toTiddlerTitle,
-      navigateFromTitle: fromTiddlerTitle,
-      navigateFromClientRect: { top: bounds.top, left: bounds.left, width: bounds.width, right: bounds.right, bottom: bounds.bottom, height: bounds.height
-      }
-    };
-    self.dispatchEvent(e);
-  }
-
   GraphWidget.prototype.createGraph = function(holderDiv) {
 
     var data= {
@@ -240,7 +202,7 @@ module-type: widget
       if (properties.nodes.length !== 0) {
         var toTiddlerTitle = properties.nodes[0];
         var fromTiddlerTitle = self.getVariable("currentTiddler");
-        displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
+        utils.displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
       }
     });
     this.graph.on('doubleClick', function(properties) {

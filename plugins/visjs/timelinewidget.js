@@ -17,6 +17,7 @@ module-type: widget
 
   var Widget = require("$:/core/modules/widgets/widget.js").widget;
   var moment = require("$:/plugins/emkay/visjs/moment.js").moment;
+  var utils = require("$:/plugins/emkay/visjs/widgetutils.js");
   var vis = require("$:/plugins/emkay/visjs/vis.js").vis;
 
   var TimelineWidget = function(parseTreeNode,options) {
@@ -49,43 +50,8 @@ module-type: widget
   };
 
 
-  // parseWidgetAttributes
-  //
-  // Utility to handle configutaion attributes for a widget.  
-  // It handles validation, coercion and assignedment of attribute values to the current widgets fields.
-  // Parent and nextSibling are required so that any errors can be rported 
-  //
-  // The attributeDefns are a object representing with a field for each attribute expected by the widget
-  //
-  // Each defintion field is an object with two fields
-  // type - This is used to coerce values ebfore assignment (only string is currently supported, ie. 'type' is currently ignored)
-  // defaultValue - When an attribute is not provided in the plugin call, then this value should be used instead
-  //
-  // If an attribute is passed to the plugin that is not expected (i.e. in the attributeDefns object), then this function returns false
-  // and an error message is output on the parent.  This should be shown instead of the widget's usual view.
-  //
-  TimelineWidget.prototype.parseWidgetAttributes = function(attributeDefns) {
-    var errors = [];
-    for (var attr in this.attributes) {
-      if (attributeDefns[attr] === undefined) {
-        errors.push(attr);
-      } else {
-        this[attr] = this.attributes[attr].trim();
-      }
-    }
-    if (errors.length !== 0) {
-      return errors;
-    }
-    for (var attrDefn in attributeDefns) {
-      if (this[attrDefn] === undefined) {
-        this[attrDefn] = attributeDefns[attrDefn].defaultValue;
-      }
-    }
-    return undefined;
-  };
-
   TimelineWidget.prototype.execute = function() {
-    var attrParseWorked = this.parseWidgetAttributes({
+    var attrParseWorked = utils.parseWidgetAttributes(this,{
       filter:        {  type: "string", defaultValue: "[!is[system]]"},
            groupField: { type: "string", defaultValue: undefined},
            startDateField: { type: "string", defaultValue: "created"},
@@ -130,7 +96,7 @@ module-type: widget
       this.refreshSelf();
       this.updateTimeline();
       return true;
-    } 
+    }
     if (this.displayedTiddlers.some(function (e) { return changedTiddlers[e.id]; })) {
       this.updateTimeline();
       return true;
@@ -143,20 +109,7 @@ module-type: widget
   };
 
 
-  function displayTiddler(self,toTiddlerTitle,fromTiddlerTitle){
-    var bounds = self.domNodes[0].getBoundingClientRect();
-    var e = {
-      type: "tw-navigate",
-      navigateTo: toTiddlerTitle,
-      navigateFromTitle: fromTiddlerTitle,
-      navigateFromClientRect: { top: bounds.top, left: bounds.left, width: bounds.width, right: bounds.right, bottom: bounds.bottom, height: bounds.height
-      }
-    };
-    self.dispatchEvent(e);
-  }
-
-
-  TimelineWidget.prototype.createTimeline = function(holderDiv) { 
+  TimelineWidget.prototype.createTimeline = function(holderDiv) {
     var data = [];
     // this.document === $tw.fakeDocument for test mode
     if (this.parentWidget.parentWidget.mockTimeline === undefined) {
@@ -170,7 +123,7 @@ module-type: widget
       if (properties.items.length !== 0) {
         var toTiddlerTitle = properties.items[0];
         var fromTiddlerTitle = self.getVariable("currentTiddler");
-        displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
+        utils.displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
       }
     });
   };
