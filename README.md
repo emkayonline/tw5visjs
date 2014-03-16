@@ -79,6 +79,3 @@ This wiki has been configured to not save changes to the server.
 
 To run the visual tests, view the tiddler called ShowTimelineTests.  This will show messages for the cases that test for invalid parameters, formats etc.
 
-## Roadmap
-
-* I intend to support the graph view in vis.js.
