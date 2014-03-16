@@ -163,6 +163,7 @@ module-type: widget
 
   GraphWidget.prototype.createGraph = function(holderDiv) {
 
+    var self = this;
     var data= {
       nodes: [],
       edges: []
@@ -174,8 +175,29 @@ module-type: widget
     } else {
       this.graph = this.parentWidget.parentWidget.mockGraph;
     }
+    this.graph.on('click', function(properties) {
+      console.log("click");
+      // Check if node is selected
+      // if (properties.nodes.length !== 0) {
+      //   var toTiddlerTitle = properties.nodes[0];
+      //   var fromTiddlerTitle = self.getVariable("currentTiddler");
+      //   utils.displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
+      // }
+    });
+    this.graph.on('doubleClick', function(properties) {
+      console.log("double click");
+      // Check if node is selected
+      // if (properties.nodes.length !== 0) {
+      //   self.drawGraph(holderDiv,properties.nodes[0]);
+      // }
+    });
+    this.drawGraph(this.tiddler);
+  };
+
+  GraphWidget.prototype.drawGraph = function(startingTiddler) {
+
     var self = this;
-    var nodeAndEdgeSets = buildNodeAndEdgeSets({nodeSet: {}, edgeSet: {}},null, null, this.tiddler,1,this.maxDepth);
+    var nodeAndEdgeSets = buildNodeAndEdgeSets({nodeSet: {}, edgeSet: {}},null, null, startingTiddler,1,this.maxDepth);
 
     var nodes = [];
     for (var key in nodeAndEdgeSets.nodeSet) {
@@ -191,37 +213,11 @@ module-type: widget
       }
     }
 
-    data= {
+    var data= {
       nodes: nodes,
       edges: edges
     };
     this.graph.setData(data);
-    this.graph.on('click', function(properties) {
-      // Check if node is selected
-      console.log("doubleClick");
-      if (properties.nodes.length !== 0) {
-        var toTiddlerTitle = properties.nodes[0];
-        var fromTiddlerTitle = self.getVariable("currentTiddler");
-        utils.displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
-      }
-    });
-    this.graph.on('doubleClick', function(properties) {
-      // Check if node is selected
-      console.log("click");
-      if (properties.nodes.length !== 0) {
-        self.tiddler = properties.nodes[0];
-        self.createGraph(holderDiv);
-      }
-    });
-    // this.graph.on('select', function(properties) {
-    //   console.log("select");
-    //   // Check if node is selected
-    //   if (properties.nodes.length !== 0) {
-    //     var toTiddlerTitle = properties.nodes[0];
-    //     var fromTiddlerTitle = self.getVariable("currentTiddler");
-    //     displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
-    //   }
-    // });
   };
 
 
