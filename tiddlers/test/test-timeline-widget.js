@@ -99,12 +99,12 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should render from a tiddlerList and default startDateField, setting start range to lowest", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline filter="[list[AListTiddler]]"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo"/>');
         // Test the rendering
         expect(wrapper.innerHTML).toBe("<p><div class='widget-error'></div><div></div></p>");
         expect(mockTimeline.setItems).toHaveBeenCalledWith([ 
-          { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,15), type : 'point' },
-          { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point' } ]);
+          { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point' },
+          { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,15), type : 'point' }]);
         expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,2,13), undefined);
         expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
         expect(mockTimeline.on).toHaveBeenCalled();
@@ -114,12 +114,12 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
 
       it("should set the a given custom time", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjstimeline filter="[list[AListTiddler]]" customTime="20140201"/>');
+        createAndRenderWidgetNode('<$visjstimeline filter="TiddlerOne TiddlerTwo" customTime="20140201"/>');
         // Test the rendering
         expect(wrapper.innerHTML).toBe("<p><div class='widget-error'></div><div></div></p>");
         expect(mockTimeline.setItems).toHaveBeenCalledWith([ 
-          { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,15), type : 'point' },
-          { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point' } ]);
+          { id : 'TiddlerOne', content : 'TiddlerOne', start : new Date(2014,2,13), type : 'point' },
+          { id : 'TiddlerTwo', content : 'TiddlerTwo', start : new Date(2014,2,15), type : 'point' }]);
         expect(mockTimeline.setWindow).toHaveBeenCalledWith(new Date(2014,2,13), undefined);
         expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
         expect(mockTimeline.setCustomTime).toHaveBeenCalledWith(new Date(2014,1,1));
@@ -132,7 +132,7 @@ Tests the visjs timeline widget wrapper (This does not use the visjs timeline, b
         createAndRenderWidgetNode('<$visjstimeline/>');
         // Test the rendering
         // Should find 16 non system tiddlers to show
-        expect(mockTimeline.setItems.argsForCall[0][0].length).toBe(18);
+        expect(mockTimeline.setItems.argsForCall[0][0].length).toBe(19);
         expect(mockTimeline.setOptions).toHaveBeenCalledWith({showCustomTime: true});
         expect(mockTimeline.on).toHaveBeenCalled();
         expect(mockTimeline.setGroups).not.toHaveBeenCalled();
