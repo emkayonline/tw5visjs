@@ -115,7 +115,7 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
         expect(mockGraph.setData).toHaveBeenCalledWith(
           { nodes : [ { id : 'TiddlerThree', label : 'TiddlerThree', shape : 'circle', color : undefined },
             { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse', color : undefined } ],
-          edges : [ { from : 'TiddlerOne', to : 'TiddlerThree', label : 'tagging', style : 'arrow' } ] });
+          edges : [ { from : 'TiddlerOne', to : 'TiddlerThree', label : 'tag', style : 'arrow' } ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
 
@@ -126,7 +126,7 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
         expect(mockGraph.setData).toHaveBeenCalledWith(
           { nodes : [ { id : 'MissingTiddler', label : 'MissingTiddler', shape : 'circle' },
             { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse', color : undefined } ],
-          edges : [ { from : 'TiddlerOne', to : 'MissingTiddler', label : 'backlink', style : 'arrow' } ] });
+          edges : [ { from : 'TiddlerOne', to : 'MissingTiddler', label : 'link', style : 'arrow' } ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
 
@@ -138,8 +138,8 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
           {nodes : [ { id : 'TiddlerFour', label : 'TiddlerFour', shape : 'circle', color : '#fe0' },
            { id : 'TiddlerTwo', label : 'TiddlerTwo', shape : 'elipse', color : undefined },
            { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse', color : undefined } ],
-           edges : [ { from : 'TiddlerTwo', to : 'TiddlerFour', label : 'backlink', style : 'arrow' },
-           { from : 'TiddlerOne', to : 'TiddlerFour', label : 'listed', style : 'arrow' } ] });
+           edges : [ { from : 'TiddlerTwo', to : 'TiddlerFour', label : 'link', style : 'arrow' },
+           { from : 'TiddlerOne', to : 'TiddlerFour', label : 'list', style : 'arrow' } ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
 
@@ -154,8 +154,8 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
           { id : 'AListTiddler', label : 'AListTiddler', shape : 'elipse', color : undefined } ],
           edges : [ { from : 'TiddlerTwo', to : 'TiddlerFour', label : 'link', style : 'arrow' },
           { from : 'TiddlerTwo', to : 'TiddlerOne', label : 'tag', style : 'arrow' },
-          { from : 'TiddlerOne', to : 'TiddlerTwo', label : 'backlink', style : 'arrow' },
-          { from : 'AListTiddler', to : 'TiddlerTwo', label : 'listed', style : 'arrow' } ] });
+          { from : 'TiddlerOne', to : 'TiddlerTwo', label : 'link', style : 'arrow' },
+          { from : 'AListTiddler', to : 'TiddlerTwo', label : 'list', style : 'arrow' } ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
 
@@ -171,14 +171,14 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
           { id : 'AListTiddler', label : 'AListTiddler', shape : 'elipse', color : undefined },
           { id : 'MissingTiddler', label : 'MissingTiddler', shape : 'triangle' },
           { id : 'TiddlerThree', label : 'TiddlerThree', shape : 'elipse', color : undefined } ],
-          edges : [ { from : 'TiddlerOne', to : 'TiddlerTwo', label : 'backlink', style : 'arrow' },
+          edges : [ { from : 'TiddlerOne', to : 'TiddlerTwo', label : 'link', style : 'arrow' },
           { from : 'TiddlerTwo', to : 'TiddlerFour', label : 'link', style : 'arrow' },
-          { from : 'TiddlerTwo', to : 'TiddlerOne', label : 'tagging', style : 'arrow' },
-          { from : 'AListTiddler', to : 'TiddlerTwo', label : 'listed', style : 'arrow' },
-          { from : 'TiddlerOne', to : 'MissingTiddler', label : 'backlink', style : 'arrow' },
+          { from : 'TiddlerTwo', to : 'TiddlerOne', label : 'tag', style : 'arrow' },
+          { from : 'AListTiddler', to : 'TiddlerTwo', label : 'list', style : 'arrow' },
+          { from : 'TiddlerOne', to : 'MissingTiddler', label : 'link', style : 'arrow' },
           { from : 'TiddlerOne', to : 'TiddlerFour', label : 'list', style : 'arrow' },
-          { from : 'TiddlerOne', to : 'TiddlerThree', label : 'tagging', style : 'arrow' },
-          { from : 'AListTiddler', to : 'TiddlerOne', label : 'listed', style : 'arrow' } ] });
+          { from : 'TiddlerOne', to : 'TiddlerThree', label : 'tag', style : 'arrow' },
+          { from : 'AListTiddler', to : 'TiddlerOne', label : 'list', style : 'arrow' } ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
 

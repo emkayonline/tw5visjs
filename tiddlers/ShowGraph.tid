@@ -4,5 +4,5 @@ title: ShowGraph
 type: text/vnd.tiddlywiki
 
 
-<$visjsgraph tiddler="TiddlerOne"/>
+<$visjsgraph tiddler="TiddlerOne" maxDepth="10"/>
 
