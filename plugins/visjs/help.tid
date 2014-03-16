@@ -12,7 +12,7 @@ This plugin required TW5 version 5.0.8-beta or later.
 
 ! Content and Attributes
 
-A list of tiddlers is specified using filter.  
+A list of tiddlers is specified using filter.
 
 Each matching tiddler is shown on the timeline using it's specified start date and end date fields.  The start date defaults to the 'created' field and the end date is optional.
 

@@ -92,40 +92,54 @@ module-type: widget
 
   function addNode(nodeSet, tiddlerTitle, startingNode) {
     nodeSet[tiddlerTitle] = {id: tiddlerTitle, label: tiddlerTitle, shape: "elipse"};
-    if ($tw.wiki.isSystemTiddler(tiddlerTitle)) {
-      nodeSet[tiddlerTitle].shape = "box";
-    }
     var tiddler = $tw.wiki.getTiddler(tiddlerTitle);
-    if (tiddler === undefined) {
+    if ($tw.wiki.isSystemTiddler(tiddlerTitle)) {
+      // System Tiddler
+      nodeSet[tiddlerTitle].shape = "box";
+      nodeSet[tiddlerTitle].color = "Gainsboro";
+    } else if (tiddler === undefined) {
+      // Missing Tiddler
       nodeSet[tiddlerTitle].shape = "triangle";
     } else {
-      nodeSet[tiddlerTitle].color = tiddler.fields.color;
-    }
-    if (startingNode) {
-      nodeSet[tiddlerTitle].shape = "circle";
+      // Normal Tiddler
+      if (tiddler.fields.color) {
+        nodeSet[tiddlerTitle].color = tiddler.fields.color;
+      }
+      if (startingNode) {
+        nodeSet[tiddlerTitle].shape = "circle";
+      if (!tiddler.fields.color) {
+        nodeSet[tiddlerTitle].color = "DodgerBlue";
+      }
+      }
     }
   }
 
   function addEdge(edgeSet, throughLinkType, fromTiddlerTitle, toTiddlerTitle) {
     if (fromTiddlerTitle !== null) {
-        var linkType = throughLinkType;
-        var tmp;
-        if (throughLinkType == "backlink") {
-          linkType = "link";
-          fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
-        } else if (throughLinkType == "listed") {
-          linkType = "list";
-          fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
-        } else if (throughLinkType == "tagging") {
-          linkType = "tag";
-          fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
-        }
-        var lineStyle = "arrow";
-        // if (linkType == "list") {
-        //   lineStyle = "arrow-center";
-        // } else if (linkType = "tag") {
-        // }
-        edgeSet[fromTiddlerTitle+":"+toTiddlerTitle+":"+linkType] = {from: fromTiddlerTitle, to: toTiddlerTitle, label: linkType, style: lineStyle};
+      var linkType = throughLinkType;
+      var tmp;
+      if (throughLinkType == "backlink") {
+        linkType = "link";
+        fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
+      } else if (throughLinkType == "listed") {
+        linkType = "list";
+        fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
+      } else if (throughLinkType == "tagging") {
+        linkType = "tag";
+        fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
+      }
+      var lineStyle = "arrow";
+      var width = 1;
+
+      if (linkType == "link") {
+        width = 2;
+      }
+      if (linkType == "tag") {
+        lineStyle = "arrow-center";
+      }
+      edgeSet[fromTiddlerTitle+":"+toTiddlerTitle+":"+linkType] = {from: fromTiddlerTitle, to: toTiddlerTitle,
+        // label: linkType,
+        style: lineStyle, width: width};
     }
   }
 
@@ -185,7 +199,7 @@ module-type: widget
     self.dispatchEvent(e);
   }
 
-  GraphWidget.prototype.createGraph = function(holderDiv) { 
+  GraphWidget.prototype.createGraph = function(holderDiv) {
 
     var data= {
       nodes: [],
@@ -207,14 +221,14 @@ module-type: widget
         nodes.push(nodeAndEdgeSets.nodeSet[key]);
       }
     }
-    
+
     var edges = [];
     for (key in nodeAndEdgeSets.edgeSet) {
       if (nodeAndEdgeSets.edgeSet.hasOwnProperty(key)) {
         edges.push(nodeAndEdgeSets.edgeSet[key]);
       }
     }
-    
+
     data= {
       nodes: nodes,
       edges: edges

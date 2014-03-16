@@ -97,13 +97,13 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
         createAndRenderWidgetNode('<$visjsgraph tiddler="AListTiddler" maxDepth="2"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
-          { nodes : [ { id : 'AListTiddler', label : 'AListTiddler', shape : 'circle', color : undefined },
-            { id : 'TiddlerTwo', label : 'TiddlerTwo', shape : 'elipse', color : undefined },
-          { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse', color : undefined } ,
-          { id : '$:/DefaultTiddlers', label : '$:/DefaultTiddlers', shape : 'box', color : undefined } ],
-          edges : [ { from : 'AListTiddler', to : 'TiddlerTwo', label : 'list', style : 'arrow' },
-          { from : 'AListTiddler', to : 'TiddlerOne', label : 'list', style : 'arrow' },
-          { from : 'AListTiddler', to : '$:/DefaultTiddlers', label : 'list', style : 'arrow' },
+          { nodes : [ { id : 'AListTiddler', label : 'AListTiddler', shape : 'circle', color : 'DodgerBlue' },
+            { id : 'TiddlerTwo', label : 'TiddlerTwo', shape : 'elipse' },
+          { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse' } ,
+          { id : '$:/DefaultTiddlers', label : '$:/DefaultTiddlers', shape : 'box', color : "Gainsboro" } ],
+          edges : [ { from : 'AListTiddler', to : 'TiddlerTwo', style : 'arrow' , width: 1},
+          { from : 'AListTiddler', to : 'TiddlerOne', style : 'arrow', width: 1 },
+          { from : 'AListTiddler', to : '$:/DefaultTiddlers', style : 'arrow', width: 1 },
           ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
@@ -113,12 +113,12 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
         createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerThree" maxDepth="2"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
-          { nodes : [ { id : 'TiddlerThree', label : 'TiddlerThree', shape : 'circle', color : undefined },
+          { nodes : [ { id : 'TiddlerThree', label : 'TiddlerThree', shape : 'circle', color : 'DodgerBlue'  },
             { id : 'testTiddler', label : 'testTiddler', shape : 'triangle' },
-            { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse', color : undefined } ],
+            { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse' } ],
           edges : [
-        { from : 'TiddlerThree', to : 'testTiddler', label : 'tag', style : 'arrow' },
-        { from : 'TiddlerOne', to : 'TiddlerThree', label : 'tag', style : 'arrow' } ] });
+        { from : 'TiddlerThree', to : 'testTiddler', style : 'arrow-center', width: 1 },
+        { from : 'TiddlerOne', to : 'TiddlerThree', style : 'arrow-center', width: 1 } ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
 
@@ -127,9 +127,9 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
         createAndRenderWidgetNode('<$visjsgraph tiddler="MissingTiddler" maxDepth="2"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
-          { nodes : [ { id : 'MissingTiddler', label : 'MissingTiddler', shape : 'circle' },
-            { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse', color : undefined } ],
-          edges : [ { from : 'TiddlerOne', to : 'MissingTiddler', label : 'link', style : 'arrow' } ] });
+          { nodes : [ { id : 'MissingTiddler', label : 'MissingTiddler', shape : 'triangle' },
+            { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse' } ],
+          edges : [ { from : 'TiddlerOne', to : 'MissingTiddler', style : 'arrow', width: 2 } ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
 
@@ -138,14 +138,14 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
         createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerFour" maxDepth="2"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
-          {nodes : [ { id : 'TiddlerFour', label : 'TiddlerFour', shape : 'circle', color : '#fe0' },
+          {nodes : [ { id : 'TiddlerFour', label : 'TiddlerFour', shape : 'circle', color : 'Orange' },
             { id : 'testTiddler', label : 'testTiddler', shape : 'triangle' },
-           { id : 'TiddlerTwo', label : 'TiddlerTwo', shape : 'elipse', color : undefined },
-           { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse', color : undefined } ],
+           { id : 'TiddlerTwo', label : 'TiddlerTwo', shape : 'elipse' },
+           { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse' } ],
            edges : [
-        { from : 'TiddlerFour', to : 'testTiddler', label : 'tag', style : 'arrow' },
-        { from : 'TiddlerTwo', to : 'TiddlerFour', label : 'link', style : 'arrow' },
-           { from : 'TiddlerOne', to : 'TiddlerFour', label : 'list', style : 'arrow' } ] });
+        { from : 'TiddlerFour', to : 'testTiddler', style : 'arrow-center', width: 1 },
+        { from : 'TiddlerTwo', to : 'TiddlerFour', style : 'arrow', width: 2 },
+           { from : 'TiddlerOne', to : 'TiddlerFour', style : 'arrow', width: 1 } ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
 
@@ -154,67 +154,21 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
         createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerTwo" maxDepth="2"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
-          { nodes : [ { id : 'TiddlerTwo', label : 'TiddlerTwo', shape : 'circle', color : undefined },
-            { id : 'TiddlerFour', label : 'TiddlerFour', shape : 'elipse', color : '#fe0' },
+          { nodes : [ { id : 'TiddlerTwo', label : 'TiddlerTwo', shape : 'circle', color : 'DodgerBlue'  },
+            { id : 'TiddlerFour', label : 'TiddlerFour', shape : 'elipse', color : 'Orange' },
             { id : 'testTiddler', label : 'testTiddler', shape : 'triangle' },
-          { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse', color : undefined },
-          { id : 'AListTiddler', label : 'AListTiddler', shape : 'elipse', color : undefined } ],
+          { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'elipse' },
+          { id : 'AListTiddler', label : 'AListTiddler', shape : 'elipse' } ],
           edges : [
-        { from : 'TiddlerTwo', to : 'TiddlerFour', label : 'link', style : 'arrow' },
-        { from : 'TiddlerTwo', to : 'testTiddler', label : 'tag', style : 'arrow' },
-          { from : 'TiddlerTwo', to : 'TiddlerOne', label : 'tag', style : 'arrow' },
-          { from : 'TiddlerOne', to : 'TiddlerTwo', label : 'link', style : 'arrow' },
-          { from : 'AListTiddler', to : 'TiddlerTwo', label : 'list', style : 'arrow' } ] });
+        { from : 'TiddlerTwo', to : 'TiddlerFour', style : 'arrow', width: 2 },
+        { from : 'TiddlerTwo', to : 'testTiddler', style : 'arrow-center', width: 1 },
+          { from : 'TiddlerTwo', to : 'TiddlerOne', style : 'arrow-center', width: 1 },
+          { from : 'TiddlerOne', to : 'TiddlerTwo', style : 'arrow', width: 2 },
+          { from : 'AListTiddler', to : 'TiddlerTwo', style : 'arrow', width: 1 } ] });
         expect(mockGraph.on).toHaveBeenCalled();
       });
 
 
-      it("should render from TiddlerOne deep", function() {
-        // Construct the widget node
-        createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerOne" maxDepth="10"/>');
-        // Test the rendering
-        expect(mockGraph.setData).toHaveBeenCalledWith(
-          { nodes : [ { id : 'TiddlerOne', label : 'TiddlerOne', shape : 'circle', color : undefined },
-            { id : 'TiddlerTwo', label : 'TiddlerTwo', shape : 'elipse', color : undefined },
-          { id : 'TiddlerFour', label : 'TiddlerFour', shape : 'elipse', color : '#fe0' },
-          { id : 'testTiddler', label : 'testTiddler', shape : 'triangle' },
-          { id : 'TiddlerThree', label : 'TiddlerThree', shape : 'elipse', color : undefined },
-          { id : 'AListTiddler', label : 'AListTiddler', shape : 'elipse', color : undefined },
-          { id : '$:/DefaultTiddlers', label : '$:/DefaultTiddlers', shape : 'box', color : undefined },
-          { id : 'ShowGraph', label : 'ShowGraph', shape : 'elipse', color : undefined },
-          { id : '$:/StoryList', label : '$:/StoryList', shape : 'box', color : undefined },
-          { id : 'ShowTimelineDemo', label : 'ShowTimelineDemo', shape : 'elipse', color : undefined },
-          { id : '$:/plugins/emkay/visjs/help', label : '$:/plugins/emkay/visjs/help', shape : 'box', color : undefined },
-          { id : 'TiddlyWiki', label : 'TiddlyWiki', shape : 'triangle' },
-          { id : 'TiddlerFilter', label : 'TiddlerFilter', shape : 'triangle' },
-          { id : '$:/tags/help', label : '$:/tags/help', shape : 'triangle' },
-          { id : 'ShowTimelineTests', label : 'ShowTimelineTests', shape : 'elipse', color : undefined },
-          { id : 'MissingTiddler', label : 'MissingTiddler', shape : 'triangle' } ],
-          edges : [ { from : 'TiddlerOne', to : 'TiddlerTwo', label : 'link', style : 'arrow' },
-          { from : 'TiddlerTwo', to : 'TiddlerFour', label : 'link', style : 'arrow' },
-          { from : 'TiddlerFour', to : 'testTiddler', label : 'tag', style : 'arrow' },
-          { from : 'TiddlerOne', to : 'testTiddler', label : 'tag', style : 'arrow' },
-          { from : 'TiddlerThree', to : 'testTiddler', label : 'tag', style : 'arrow' },
-          { from : 'TiddlerOne', to : 'TiddlerThree', label : 'tag', style : 'arrow' },
-          { from : 'TiddlerTwo', to : 'testTiddler', label : 'tag', style : 'arrow' },
-          { from : 'TiddlerOne', to : 'TiddlerFour', label : 'list', style : 'arrow' },
-          { from : 'TiddlerTwo', to : 'TiddlerOne', label : 'tag', style : 'arrow' },
-          { from : 'AListTiddler', to : 'TiddlerTwo', label : 'list', style : 'arrow' },
-          { from : 'AListTiddler', to : 'TiddlerOne', label : 'list', style : 'arrow' },
-          { from : 'AListTiddler', to : '$:/DefaultTiddlers', label : 'list', style : 'arrow' },
-          { from : '$:/DefaultTiddlers', to : 'ShowGraph', label : 'link', style : 'arrow' },
-          { from : '$:/StoryList', to : 'ShowGraph', label : 'list', style : 'arrow' },
-          { from : '$:/StoryList', to : 'ShowTimelineDemo', label : 'list', style : 'arrow' },
-          { from : '$:/StoryList', to : '$:/plugins/emkay/visjs/help', label : 'list', style : 'arrow' },
-          { from : '$:/plugins/emkay/visjs/help', to : 'TiddlyWiki', label : 'link', style : 'arrow' },
-          { from : '$:/plugins/emkay/visjs/help', to : 'TiddlerFilter', label : 'link', style : 'arrow' },
-          { from : '$:/plugins/emkay/visjs/help', to : '$:/tags/help', label : 'tag', style : 'arrow' },
-          { from : '$:/StoryList', to : 'ShowTimelineTests', label : 'list', style : 'arrow' },
-          { from : '$:/DefaultTiddlers', to : 'ShowTimelineDemo', label : 'link', style : 'arrow' },
-          { from : '$:/DefaultTiddlers', to : 'ShowTimelineTests', label : 'link', style : 'arrow' },
-          { from : 'TiddlerOne', to : 'MissingTiddler', label : 'link', style : 'arrow' } ] } );
-        expect(mockGraph.on).toHaveBeenCalled();
-      });
 
 
 
