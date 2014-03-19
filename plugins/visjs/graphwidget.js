@@ -91,8 +91,7 @@ module-type: widget
   function addEdge(edgeSet, throughLinkType, fromTiddlerTitle, toTiddlerTitle) {
     if (fromTiddlerTitle !== null) {
       var linkType = throughLinkType;
-      var tmp;
-      if (throughLinkType == "backlink") {
+      if (throughLinkType === "backlink") {
         linkType = "link";
         fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
       } else if (throughLinkType == "listed") {
@@ -105,10 +104,10 @@ module-type: widget
       var lineStyle = "arrow";
       var width = 1;
 
-      if (linkType == "link") {
+      if (linkType === "link") {
         width = 2;
       }
-      if (linkType == "tag") {
+      if (linkType === "tag") {
         lineStyle = "arrow-center";
       }
       edgeSet[fromTiddlerTitle+":"+toTiddlerTitle+":"+linkType] = {from: fromTiddlerTitle, to: toTiddlerTitle,
@@ -187,9 +186,10 @@ module-type: widget
     this.graph.on('doubleClick', function(properties) {
       console.log("double click");
       // Check if node is selected
-      // if (properties.nodes.length !== 0) {
-      //   self.drawGraph(holderDiv,properties.nodes[0]);
-      // }
+      if (properties.nodes.length !== 0) {
+        debugger;
+        self.drawGraph(properties.nodes[0]);
+      }
     });
     this.drawGraph(this.tiddler);
   };
@@ -197,10 +197,10 @@ module-type: widget
   GraphWidget.prototype.drawGraph = function(startingTiddler) {
 
     var self = this;
-    var nodeAndEdgeSets = buildNodeAndEdgeSets({nodeSet: {}, edgeSet: {}},null, null, startingTiddler,1,this.maxDepth);
-
+    var nodeAndEdgeSets = buildNodeAndEdgeSets({nodeSet: {}, edgeSet: {}},null, null, startingTiddler,0,this.maxDepth);
+    var key;
     var nodes = [];
-    for (var key in nodeAndEdgeSets.nodeSet) {
+    for (key in nodeAndEdgeSets.nodeSet) {
       if (nodeAndEdgeSets.nodeSet.hasOwnProperty(key)) {
         nodes.push(nodeAndEdgeSets.nodeSet[key]);
       }
