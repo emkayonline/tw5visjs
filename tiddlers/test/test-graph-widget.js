@@ -94,7 +94,7 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
 
       it("should render from AListTiddler", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjsgraph tiddler="AListTiddler" maxDepth="2"/>');
+        createAndRenderWidgetNode('<$visjsgraph tiddler="AListTiddler" maxDepth="1"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
           { nodes : [ { id : 'AListTiddler', label : 'AListTiddler', shape : 'circle', color : 'DodgerBlue' },
@@ -110,7 +110,7 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
 
       it("should render from TiddlerThree", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerThree" maxDepth="2"/>');
+        createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerThree" maxDepth="1"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
           { nodes : [ { id : 'TiddlerThree', label : 'TiddlerThree', shape : 'circle', color : 'DodgerBlue'  },
@@ -124,7 +124,7 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
 
       it("should render from MissingTiddler", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjsgraph tiddler="MissingTiddler" maxDepth="2"/>');
+        createAndRenderWidgetNode('<$visjsgraph tiddler="MissingTiddler" maxDepth="1"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
           { nodes : [ { id : 'MissingTiddler', label : 'MissingTiddler', shape : 'triangle' },
@@ -135,7 +135,7 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
 
       it("should render from TiddlerFour", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerFour" maxDepth="2"/>');
+        createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerFour" maxDepth="1"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
           {nodes : [ { id : 'TiddlerFour', label : 'TiddlerFour', shape : 'circle', color : 'Orange' },
@@ -151,7 +151,7 @@ Tests the visjs graph widget wrapper (This does not use the visjs graph, but use
 
       it("should render from TiddlerTwo", function() {
         // Construct the widget node
-        createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerTwo" maxDepth="2"/>');
+        createAndRenderWidgetNode('<$visjsgraph tiddler="TiddlerTwo" maxDepth="1"/>');
         // Test the rendering
         expect(mockGraph.setData).toHaveBeenCalledWith(
           { nodes : [ { id : 'TiddlerTwo', label : 'TiddlerTwo', shape : 'circle', color : 'DodgerBlue'  },

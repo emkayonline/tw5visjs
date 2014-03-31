@@ -16,7 +16,6 @@ module-type: widget
   'use strict';
 
   var Widget = require("$:/core/modules/widgets/widget.js").widget;
-  var moment = require("$:/plugins/emkay/visjs/moment.js").moment;
   var utils = require("$:/plugins/emkay/visjs/widgetutils.js");
   var vis = require("$:/plugins/emkay/visjs/vis.js").vis;
 
@@ -58,7 +57,7 @@ module-type: widget
   GraphWidget.prototype.execute = function() {
     var attrParseWorked = utils.parseWidgetAttributes(this, {
            tiddler:       {   type: "string", defaultValue: this.getVariable("currentTiddler")},
-           maxDepth:       {   type: "integer", defaultValue: 3}
+           maxDepth:       {   type: "integer", defaultValue: 2}
            // options:  { type: "flags", defaultValue: undefined}
             });
     return attrParseWorked;
@@ -94,10 +93,10 @@ module-type: widget
       if (throughLinkType === "backlink") {
         linkType = "link";
         fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
-      } else if (throughLinkType == "listed") {
+      } else if (throughLinkType === "listed") {
         linkType = "list";
         fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
-      } else if (throughLinkType == "tagging") {
+      } else if (throughLinkType === "tagging") {
         linkType = "tag";
         fromTiddlerTitle = [toTiddlerTitle, toTiddlerTitle = fromTiddlerTitle][0];
       }
@@ -174,20 +173,19 @@ module-type: widget
     } else {
       this.graph = this.parentWidget.parentWidget.mockGraph;
     }
-    this.graph.on('click', function(properties) {
-      console.log("click");
-      // Check if node is selected
-      // if (properties.nodes.length !== 0) {
-      //   var toTiddlerTitle = properties.nodes[0];
-      //   var fromTiddlerTitle = self.getVariable("currentTiddler");
-      //   utils.displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
-      // }
-    });
+
+    // double click also creates click event, so don't craete a click handler
+    // this.graph.on('click', function(properties) {
+    //   // Check if node is selected
+    //   if (properties.nodes.length !== 0) {
+    //     var toTiddlerTitle = properties.nodes[0];
+    //     var fromTiddlerTitle = self.getVariable("currentTiddler");
+    //     utils.displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
+    //   }
+    // });
     this.graph.on('doubleClick', function(properties) {
-      console.log("double click");
       // Check if node is selected
       if (properties.nodes.length !== 0) {
-        debugger;
         self.drawGraph(properties.nodes[0]);
       }
     });
@@ -197,7 +195,7 @@ module-type: widget
   GraphWidget.prototype.drawGraph = function(startingTiddler) {
 
     var self = this;
-    var nodeAndEdgeSets = buildNodeAndEdgeSets({nodeSet: {}, edgeSet: {}},null, null, startingTiddler,0,this.maxDepth);
+    var nodeAndEdgeSets = buildNodeAndEdgeSets({nodeSet: {}, edgeSet: {}},null, null, startingTiddler,0,self.maxDepth);
     var key;
     var nodes = [];
     for (key in nodeAndEdgeSets.nodeSet) {
@@ -217,7 +215,7 @@ module-type: widget
       nodes: nodes,
       edges: edges
     };
-    this.graph.setData(data);
+    self.graph.setData(data);
   };
 
 
