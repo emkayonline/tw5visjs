@@ -7,8 +7,8 @@
 				"title": "$:/plugins/emkay/visjs/vis.js",
 				"module-type": "library"
 			},
-			"prefix": "var vis;",
-			"suffix": "vis = module.exports; exports.vis = vis\n"
+			"prefix": "var vis, _save_module_exports = module.exports;",
+			"suffix": "vis = module.exports; module.exports = _save_module_exports; exports.vis = vis\n"
 		},
 		{
 			"file": "github/dist/vis.min.css",

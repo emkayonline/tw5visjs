@@ -13,7 +13,11 @@ module-type: widget
 /*global $tw: false */
 
 (function() {
+
+if(false) { // JWR: Temporarily disable graphwidget
+
   'use strict';
+
 
   var Widget = require("$:/core/modules/widgets/widget.js").widget;
   var utils = require("$:/plugins/emkay/visjs/widgetutils.js");
@@ -220,6 +224,8 @@ module-type: widget
 
 
   exports.visjsgraph = GraphWidget;
+
+} // JWR: Temporarily disable graphwidget
 
   }
   ());

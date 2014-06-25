@@ -7,8 +7,8 @@
 				"title": "$:/plugins/emkay/visjs/moment.js",
 				"module-type": "library"
 			},
-			"prefix": "var moment;module.exports=true;",
-			"suffix": "moment = module.exports; exports.moment = moment\n"
+			"prefix": "var moment;_save_module_exports = module.exports;module.exports=true;",
+			"suffix": "moment = module.exports; module.exports = _save_module_exports; exports.moment = moment\n"
 		}
 	]
 }
