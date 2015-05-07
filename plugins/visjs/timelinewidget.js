@@ -122,8 +122,7 @@ module-type: widget
       // Check if background or a tiddler is selected
       if (properties.items.length !== 0) {
         var toTiddlerTitle = properties.items[0];
-        var fromTiddlerTitle = self.getVariable("currentTiddler");
-        utils.displayTiddler(self, toTiddlerTitle, fromTiddlerTitle);
+        utils.displayTiddler(self, toTiddlerTitle);
       }
     });
   };

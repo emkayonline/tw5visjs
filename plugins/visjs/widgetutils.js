@@ -57,15 +57,19 @@ module-type: library
   }
 
 
-  function displayTiddler(self,toTiddlerTitle,fromTiddlerTitle){
-    var bounds = self.domNodes[0].getBoundingClientRect();
+  function displayTiddler(self,toTiddlerTitle){
+    console.log(self);
+    var domTiddler = self.parentDomNode.parentNode;
+    var bounds = domTiddler.getBoundingClientRect();
     var e = {
-      type: "tw-navigate",
+      type: "tm-navigate",
       navigateTo: toTiddlerTitle,
-      navigateFromTitle: fromTiddlerTitle,
+      navigateFromTitle: self.getVariable("currentTiddler"),
+      navigateFromNode: domTiddler,
       navigateFromClientRect: { top: bounds.top, left: bounds.left, width: bounds.width, right: bounds.right, bottom: bounds.bottom, height: bounds.height
       }
     };
+    console.log(e);
     self.dispatchEvent(e);
   }
 
