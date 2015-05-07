@@ -58,7 +58,6 @@ module-type: library
 
 
   function displayTiddler(self,toTiddlerTitle){
-    console.log(self);
     var domTiddler = self.parentDomNode.parentNode;
     var bounds = domTiddler.getBoundingClientRect();
     var e = {
@@ -69,7 +68,6 @@ module-type: library
       navigateFromClientRect: { top: bounds.top, left: bounds.left, width: bounds.width, right: bounds.right, bottom: bounds.bottom, height: bounds.height
       }
     };
-    console.log(e);
     self.dispatchEvent(e);
   }
 
