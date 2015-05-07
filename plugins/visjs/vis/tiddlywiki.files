@@ -15,7 +15,7 @@
 			"fields": {
 				"type": "text/css",
 				"title": "$:/plugins/emkay/visjs/vis.css",
-				"tags": "[[$:/tags/stylesheet]]"
+				"tags": "[[$:/tags/Stylesheet]]"
 			}
 		}
 	]
