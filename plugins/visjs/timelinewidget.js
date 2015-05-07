@@ -18,7 +18,7 @@ module-type: widget
   var Widget = require("$:/core/modules/widgets/widget.js").widget;
   var moment = require("$:/plugins/emkay/visjs/moment.js").moment;
   var utils = require("$:/plugins/emkay/visjs/widgetutils.js");
-  var vis = require("$:/plugins/emkay/visjs/vis.js").vis;
+  var vis = require("$:/plugins/felixhayashi/vis/vis.js");
 
   var TimelineWidget = function(parseTreeNode,options) {
     this.initialise(parseTreeNode,options);
