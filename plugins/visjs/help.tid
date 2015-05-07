@@ -4,16 +4,13 @@ type: text/vnd.tiddlywiki
 
 ! Introduction
 
-The vis.js widget provides access tothe features of the [[vis.js|http://visjs.org]] library.  This allows a set of tiddlers to be shown on a graphical timeline or in graph (consisting of nodes and edges).
+The vis.js widget provides access tothe features of the [[vis.js|http://visjs.org]] library.  This allows a set of tiddlers to be shown on a graphical timeline.
 
 ! Requirements
 
-This plugin required TW5 version 5.0.8-beta or later.
+This plugin requires TW5 version 5.1.8 or later.
 
 ! Widgets
 
-The plugin provides two widgets
-
-# Timeline Widget ([[help|$:/plugins/emkay/visjs/timelinehelp]], [[demo|ShowTimelineDemo]], [[tests|ShowTimelineTests]])
-# Graph Widget ([[help|$:/plugins/emkay/visjs/graphhelp]], [[demo|ShowGraph]])
+The plugin provides one widget: `visjstimeline` ([[help|$:/plugins/emkay/visjs/timelinehelp]])
 
