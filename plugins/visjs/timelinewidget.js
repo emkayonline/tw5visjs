@@ -158,6 +158,7 @@ module-type: widget
           // var newTimepoint = {id: tiddlerName, content: tiddlerName, start: $tw.utils.formatDateString(startDate, "YYYY-0MM-0DD"), type: 'point'};
           var caption = theTiddler.fields.caption || tiddlerName;
           var newTimepoint = {id: tiddlerName, content: caption, title: caption, start: startDate, type: 'point'};
+          newTimepoint.style = "border-color: "+theTiddler.getFieldString("color")+";";
           if (self.groupField !== undefined) {
             var tiddlerGroup = theTiddler.getFieldString(self.groupField);
             if (tiddlerGroup !== "") {
