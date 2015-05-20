@@ -157,7 +157,7 @@ module-type: widget
         if (!isNaN(startDate)) {
           // var newTimepoint = {id: tiddlerName, content: tiddlerName, start: $tw.utils.formatDateString(startDate, "YYYY-0MM-0DD"), type: 'point'};
           var caption = theTiddler.fields.caption || tiddlerName;
-          var newTimepoint = {id: tiddlerName, content: caption, start: startDate, type: 'point'};
+          var newTimepoint = {id: tiddlerName, content: caption, title: caption, start: startDate, type: 'point'};
           if (self.groupField !== undefined) {
             var tiddlerGroup = theTiddler.getFieldString(self.groupField);
             if (tiddlerGroup !== "") {
