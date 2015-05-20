@@ -10,3 +10,8 @@ type: text/css
   border-width: 3px;
   background-color: #f0f0ff;
   }
+
+.vis.timeline .labelset .vlabel, .vis.timeline .labelset .vlabel:last-child {
+  border: 3px solid;
+  background-color: #fffff0;
+}

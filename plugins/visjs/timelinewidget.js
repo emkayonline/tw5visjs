@@ -57,7 +57,9 @@ module-type: widget
            startDateField: { type: "string", defaultValue: "created"},
            endDateField:  { type: "string", defaultValue: undefined},
            format:  { type: "string", defaultValue: undefined},
-           customTime:  { type: "string", defaultValue: "now"} });
+           customTime:  { type: "string", defaultValue: "now"},
+           groupTags: {type: "string", defaultValue: undefined}
+           });
 
     if ((attrParseWorked === undefined) && (this.filter)) {
       this.compiledFilter = this.wiki.compileFilter(this.filter);
@@ -158,9 +160,15 @@ module-type: widget
           // var newTimepoint = {id: tiddlerName, content: tiddlerName, start: $tw.utils.formatDateString(startDate, "YYYY-0MM-0DD"), type: 'point'};
           var caption = theTiddler.fields.caption || tiddlerName;
           var newTimepoint = {id: tiddlerName, content: caption, title: caption, start: startDate, type: 'point'};
-          newTimepoint.style = "border-color: "+theTiddler.getFieldString("color")+";";
+          if(theTiddler.getFieldString("color") !== "") newTimepoint.style = "border-color: "+theTiddler.getFieldString("color")+";";
+          var tiddlerGroup = "";
           if (self.groupField !== undefined) {
-            var tiddlerGroup = theTiddler.getFieldString(self.groupField);
+            tiddlerGroup = theTiddler.getFieldString(self.groupField);
+          } else if(self.groupTags !== undefined) {
+            $tw.utils.each($tw.wiki.filterTiddlers(self.groupTags),
+              function(tag) {if(theTiddler.hasTag(tag)) tiddlerGroup = tag;});
+          }
+          if(self.groupTags !== undefined || self.groupField !== undefined) {
             if (tiddlerGroup !== "") {
               newTimepoint.group = tiddlerGroup;
               currentGroups[tiddlerGroup] = true;
@@ -236,7 +244,10 @@ module-type: widget
     if (Object.keys(result.groups).length !== 0) {
       var theGroups = [];
       for (var g in result.groups) {
-        theGroups.push({id: g, content: g});
+        theGroups.push({id: g, content: g, title: g});
+        var tiddler = $tw.wiki.getTiddler(g);
+        if(tiddler && tiddler.getFieldString("color") !== "")
+          theGroups[theGroups.length-1].style = "border-color: "+tiddler.getFieldString("color")+";";
       }
       this.timeline.setGroups(theGroups);
     }
