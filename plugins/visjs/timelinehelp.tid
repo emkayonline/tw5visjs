@@ -12,7 +12,7 @@ A list of tiddlers is specified using filter.
 
 Each matching tiddler is shown on the timeline using it's specified start date and end date fields.  The start date defaults to the 'created' field and the end date is optional.
 
-If present, the `color` field is used to render the corresponding item on the timeline
+If present, the `color` field is used to render the corresponding item or group on the timeline.
 
 !! Validate date format on tiddlers
 * By default dates are parsed using the TiddlyWiki date parser (which will handle the 'created' and 'modified' fields)
