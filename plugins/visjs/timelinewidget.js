@@ -257,6 +257,9 @@ module-type: widget
       if (endDate !== undefined) {
         endTime = endDate.getTime();
       }
+      else {
+        endTime = startTime;
+      }
       if (theMin === undefined || startTime < theMin) {
         theMin = startTime;
       }
