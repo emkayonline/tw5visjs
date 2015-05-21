@@ -32,9 +32,19 @@ module-type: widget
 
     var attrParseWorked = this.execute();
     if (attrParseWorked === undefined) {
-      var timelineHolder = this.document.createElement("div");
+      var timelineHolder = $tw.utils.domMaker("div",{"attributes": {"style": "height:100%;padding:2px;"}});
       parent.insertBefore(timelineHolder,nextSibling);
       this.domNodes.push(timelineHolder);
+
+      // -- adapted from felixhayashi's tiddlymap in widget.map.js
+      this.sidebar = document.getElementsByClassName("tc-sidebar-scrollable")[0];
+      this.isContainedInSidebar = (this.sidebar && this.sidebar.contains(this.parentDomNode));
+      parent.style["width"] = this.getAttribute("width", "100%");
+      this.handleResizeEvent = this.handleResizeEvent.bind(this);
+      window.addEventListener("resize", this.handleResizeEvent, false);
+      this.handleResizeEvent();
+      // --
+
       this.createTimeline(timelineHolder);
       this.updateTimeline();
       // We follow the d3.js pattern here as children are ignored
@@ -104,6 +114,8 @@ module-type: widget
       this.updateTimeline();
       return true;
     }
+
+    this.handleResizeEvent();
   };
 
 
@@ -124,6 +136,24 @@ module-type: widget
       }
     });
   };
+
+  // -- adapted from felixhayashi's tiddlymap in widget.map.js
+  TimelineWidget.prototype.handleResizeEvent = function(event) {
+    if(this.isContainedInSidebar) {
+      var windowHeight = window.innerHeight;
+      var canvasOffset = this.parentDomNode.getBoundingClientRect().top;
+      var distanceBottom = this.getAttribute("bottom-spacing", "0px");
+      var calculatedHeight = (windowHeight - canvasOffset) + "px";
+      this.parentDomNode.style["height"] = "calc(" + calculatedHeight + " - " + distanceBottom + ")";
+    } else {
+      var height = this.getAttribute("height");
+      this.parentDomNode.style["height"] = (height ? height : "300px");
+    }
+    if(this.timeline) {
+      this.timeline.redraw(); // redraw timeline
+    }
+  };
+  // --
 
   function dateFieldToDate(dateField, dateFormat) {
     dateField = dateField.trim();
@@ -214,7 +244,7 @@ module-type: widget
     var result = timepointList.reduce(addTimeData(self), {data: [], groups: {}, errors: []});
     this.displayedTiddlers = result.data;
     this.timeline.setItems(result.data);
-    var options = {showCustomTime: true};
+    var options = {showCustomTime: true, height:"100%"};
     this.timeline.setOptions(options);
     var theMax, theMin, startTime, endDate, endTime, minDate, maxDate;
     for (d in result.data) {
