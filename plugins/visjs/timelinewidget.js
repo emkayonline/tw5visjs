@@ -128,11 +128,17 @@ module-type: widget
       this.timeline = this.parentWidget.parentWidget.mockTimeline;
     }
     var self = this;
-    this.timeline.on('select', function(properties) {
+    this.timeline.on('click', function(properties) {
       // Check if background or a tiddler is selected
-      if (properties.items.length !== 0) {
-        var toTiddlerTitle = properties.items[0];
+      if (properties.item !== null) {
+        var toTiddlerTitle = properties.item;
         utils.displayTiddler(self, toTiddlerTitle);
+      }
+      else if(properties.group !== null && properties.what === "group-label") {
+        var toTiddlerTitle = properties.group;
+        if($tw.wiki.getTiddler(toTiddlerTitle)) {
+          utils.displayTiddler(self, toTiddlerTitle);
+        }
       }
     });
   };
