@@ -71,8 +71,22 @@ module-type: library
     self.dispatchEvent(e);
   }
 
+  function enhancedColorStyle(csscolor) {
+    var color = $tw.utils.parseCSSColor(csscolor);
+    var style = null;
+    if(color !== null) {
+      for(var i=0;i<3;i++) color[i] = Math.floor(240 + color[i] / 17);
+
+      style = "border-color: " + csscolor + ";"
+            + "background-color: rgb(" + (color[0]).toString()+","
+                                       + (color[1]).toString()+","
+                                       + (color[2]).toString()+");";
+    }
+    return style;
+  }
+
   exports.parseWidgetAttributes = parseWidgetAttributes;
   exports.displayTiddler = displayTiddler;
-
+  exports.enhancedColorStyle = enhancedColorStyle;
 }
 ());

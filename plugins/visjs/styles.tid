@@ -1,17 +1,26 @@
-title: $:/plugins/emkay/visjs/styles
+title: $:/plugins/emkay/visjs/styles.css
 tags: [[$:/tags/Stylesheet]]
 type: text/css
 
 .vis.timeline .item.dot {
   border-color: inherit;
-  }
+}
 
 .vis.timeline .item.range {
-  border-width: 3px;
   background-color: #f0f0ff;
-  }
+}
 
-.vis.timeline .labelset .vlabel, .vis.timeline .labelset .vlabel:last-child {
-  border: 3px solid;
+.vis.timeline .item.range .content {
+  width: 100%;
+  text-align: center;
+}
+
+.vis.timeline .labelset .vlabel {
   background-color: #fffff0;
+}
+
+.vis.timeline .labelset .vlabel .inner {
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
 }

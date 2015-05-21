@@ -160,7 +160,9 @@ module-type: widget
           // var newTimepoint = {id: tiddlerName, content: tiddlerName, start: $tw.utils.formatDateString(startDate, "YYYY-0MM-0DD"), type: 'point'};
           var caption = theTiddler.fields.caption || tiddlerName;
           var newTimepoint = {id: tiddlerName, content: caption, title: caption, start: startDate, type: 'point'};
-          if(theTiddler.getFieldString("color") !== "") newTimepoint.style = "border-color: "+theTiddler.getFieldString("color")+";";
+          if(theTiddler.getFieldString("color") !== "") {
+            newTimepoint.style = "border-color: "+theTiddler.getFieldString("color")+";";
+          }
           var tiddlerGroup = "";
           if (self.groupField !== undefined) {
             tiddlerGroup = theTiddler.getFieldString(self.groupField);
@@ -188,6 +190,10 @@ module-type: widget
                 newTimepoint.end = endDate;
                 if (newTimepoint.end.getTime() != newTimepoint.start.getTime()) {
                   newTimepoint.type = 'range';
+                  if(theTiddler.getFieldString("color") !== "") {
+                    newTimepoint.style += "border-width: 3px;"
+                                        + utils.enhancedColorStyle(theTiddler.getFieldString("color"));
+                  }
                 }
               }
             } else {
@@ -246,8 +252,10 @@ module-type: widget
       for (var g in result.groups) {
         theGroups.push({id: g, content: g, title: g});
         var tiddler = $tw.wiki.getTiddler(g);
-        if(tiddler && tiddler.getFieldString("color") !== "")
-          theGroups[theGroups.length-1].style = "border-color: "+tiddler.getFieldString("color")+";";
+        if(tiddler && tiddler.getFieldString("color") !== "") {
+          theGroups[theGroups.length-1].style = "border: 3px solid;"
+                                              + utils.enhancedColorStyle(tiddler.getFieldString("color"));
+        }
       }
       this.timeline.setGroups(theGroups);
     }
