@@ -63,7 +63,7 @@ module-type: widget
            startDateField: { type: "string", defaultValue: "created"},
            endDateField:  { type: "string", defaultValue: undefined},
            format:  { type: "string", defaultValue: undefined},
-           customTime:  { type: "string", defaultValue: "now"},
+           customTime:  { type: "string", defaultValue: undefined},
            groupTags: {type: "string", defaultValue: undefined}
            });
 
@@ -244,8 +244,6 @@ module-type: widget
     var result = timepointList.reduce(addTimeData(self), {data: [], groups: {}, errors: []});
     this.displayedTiddlers = result.data;
     this.timeline.setItems(result.data);
-    var options = {showCustomTime: true, height:"100%"};
-    this.timeline.setOptions(options);
     var theMax, theMin, startTime, endDate, endTime, minDate, maxDate;
     for (d in result.data) {
       startTime = result.data[d].start.getTime();
@@ -267,12 +265,15 @@ module-type: widget
       maxDate = new Date(theMax);
     }
     this.timeline.setWindow(minDate, maxDate);
-    if (this.customTime !== "now") {
-      var m = moment(this.customTime, "YYYYMMDD", true);
-      if (m.isValid()) {
-        this.timeline.setCustomTime(m.toDate());
+    var options = {height:"100%"};
+    if (this.customTime !== undefined) {
+      var d = dateFieldToDate(this.customTime, this.format);
+      if (d !== undefined) {
+        options["showCustomTime"] = true;
+        this.timeline.setCustomTime(d);
       }
     }
+    this.timeline.setOptions(options);
     if (Object.keys(result.groups).length !== 0) {
       var theGroups = [];
       for (var g in result.groups) {
