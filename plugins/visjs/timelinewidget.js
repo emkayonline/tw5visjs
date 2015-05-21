@@ -264,6 +264,11 @@ module-type: widget
     if (theMax !== undefined) {
       maxDate = new Date(theMax);
     }
+    if(minDate !== undefined && maxDate !== undefined) {
+      var margin = Math.ceil(Math.abs(maxDate - minDate)*.05);
+      minDate.setTime(minDate.getTime()-margin);
+      maxDate.setTime(maxDate.getTime()+margin);
+    }
     this.timeline.setWindow(minDate, maxDate);
     var options = {height:"100%"};
     if (this.customTime !== undefined) {
