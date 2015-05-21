@@ -85,8 +85,33 @@ module-type: library
     return style;
   }
 
+  // adapted from $tw.utils.error of $:/boot/boot.js
+  function dispError(message, title, subtitle) {
+    console.error($tw.node ? "\x1b[1;31m" + message + "\x1b[0m" : message);
+    if($tw.browser && !$tw.node) {
+        // Display an error message to the user
+        var dm = $tw.utils.domMaker,
+            heading = dm("h1",{text: (title || "Error with vis.js Timeline")}),
+            prompt = dm("div",{text: (subtitle || "Please check the following:"), "class": "tc-error-prompt"}),
+            message = dm("div",{innerHTML: message}, {"attributes": {"style": "text-align:left;"}}),
+            button = dm("button",{text: "close"}),
+            form = dm("form",{children: [heading,prompt,message,button], "class": "tc-error-form"});
+        document.body.insertBefore(form,document.body.firstChild);
+        form.addEventListener("submit",function(event) {
+            document.body.removeChild(form);
+            event.preventDefault();
+            return false;
+        },true);
+        return null;
+    } else if(!$tw.browser) {
+        // Exit if we're under node.js
+        process.exit(1);
+    }
+  }
+
   exports.parseWidgetAttributes = parseWidgetAttributes;
   exports.displayTiddler = displayTiddler;
   exports.enhancedColorStyle = enhancedColorStyle;
+  exports.dispError = dispError;
 }
 ());

@@ -29,10 +29,6 @@ module-type: widget
   TimelineWidget.prototype.render = function(parent,nextSibling) {
     this.parentDomNode = parent;
     this.computeAttributes();
-    var dm = $tw.utils.domMaker;
-    this.errorDiv = dm("div",{document: this.document, "class": "widget-error"});
-    parent.insertBefore(this.errorDiv,nextSibling);
-    this.domNodes.push(this.errorDiv);
 
     var attrParseWorked = this.execute();
     if (attrParseWorked === undefined) {
@@ -44,7 +40,7 @@ module-type: widget
       // We follow the d3.js pattern here as children are ignored
       // this.renderChildren(timelineHolder,nextSibling);
     } else {
-      this.errorDiv.innerHTML = this.parseTreeNode.type+": Unexpected attribute(s) "+attrParseWorked.join(", ");
+      utils.dispError(this.parseTreeNode.type+": Unexpected attribute(s) "+attrParseWorked.join(", "));
       this.refresh = function() {}; // disable refresh of this as it won't work with incorrrect attributes
     }
   };
@@ -260,7 +256,7 @@ module-type: widget
       this.timeline.setGroups(theGroups);
     }
     if (result.errors.length !== 0) {
-      this.errorDiv.innerHTML = this.parseTreeNode.type+": "+result.errors.join("<br/>");
+      utils.dispError(this.parseTreeNode.type+": <ul><li>"+result.errors.join("</li><li>")+"</li></ul>");
     }
   };
 
