@@ -12,11 +12,13 @@ A list of tiddlers is specified using filter.
 
 Each matching tiddler is shown on the timeline using it's specified start date and end date fields.  The start date defaults to the 'created' field and the end date is optional.
 
+If present, the `color` field is used to render the corresponding item or group on the timeline.
+
 !! Validate date format on tiddlers
 * By default dates are parsed using the TiddlyWiki date parser (which will handle the 'created' and 'modified' fields)
-* An override date format can be specified. 
-* This format will apply to both the start and end dates.  
-* Additionally the start date or end date field on a tiddler can be set to the word "now", this will set that date in the timeline to the current date and time when the timeline is displayed.
+* An override date format can be specified.
+* This format will apply to both the start and end dates, and customTime.
+* Additionally the start date or end date field on a tiddler, or the customTime attribute, can be set to the word "now", this will set that date in the timeline to the current date and time when the timeline is displayed.
 
 |!Attribute|!Description |
 |filter|The TiddlerFilter used to generate the list of tiddlers to display, by default it selects all non system tiddlers|
@@ -24,7 +26,8 @@ Each matching tiddler is shown on the timeline using it's specified start date a
 |endDateField|A field on each tiddler that defines the end date of a tiddler in the timeline.  This attribute is optional. |
 |format|The format for parsing the dates, using the moment.js [[Parse string+format|http://momentjs.com/docs/#/parsing/string-format/]].|
 |groupField|A field whose value will be used to group tiddlers on the timeline|
-|customTime|A date at which a vertical bar will be shown on the timeline (In the format YYYYMMDD)|
+|customTime|A date at which a vertical bar will be shown on the timeline (In the same format as start/endDateField fields)|
+|groupTags|If `groupField` field is not used and if a filtered tiddler has a tag among this [[Title List|http://tiddlywiki.com/#Title%20List]], this tag will be used as the item's group|
 
 The content of the `<$visjstimeline>` widget is ignored.
 

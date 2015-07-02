@@ -57,20 +57,61 @@ module-type: library
   }
 
 
-  function displayTiddler(self,toTiddlerTitle,fromTiddlerTitle){
-    var bounds = self.domNodes[0].getBoundingClientRect();
+  function displayTiddler(self,toTiddlerTitle){
+    var domTiddler = self.parentDomNode.parentNode;
+    var bounds = domTiddler.getBoundingClientRect();
     var e = {
-      type: "tw-navigate",
+      type: "tm-navigate",
       navigateTo: toTiddlerTitle,
-      navigateFromTitle: fromTiddlerTitle,
+      navigateFromTitle: self.getVariable("currentTiddler"),
+      navigateFromNode: domTiddler,
       navigateFromClientRect: { top: bounds.top, left: bounds.left, width: bounds.width, right: bounds.right, bottom: bounds.bottom, height: bounds.height
       }
     };
     self.dispatchEvent(e);
   }
 
+  function enhancedColorStyle(csscolor) {
+    var color = $tw.utils.parseCSSColor(csscolor);
+    var style = null;
+    if(color !== null) {
+      for(var i=0;i<3;i++) color[i] = Math.floor(240 + color[i] / 17);
+
+      style = "border-color: " + csscolor + ";"
+            + "background-color: rgb(" + (color[0]).toString()+","
+                                       + (color[1]).toString()+","
+                                       + (color[2]).toString()+");";
+    }
+    return style;
+  }
+
+  // adapted from $tw.utils.error of $:/boot/boot.js
+  function dispError(message, title, subtitle) {
+    console.error($tw.node ? "\x1b[1;31m" + message + "\x1b[0m" : message);
+    if($tw.browser && !$tw.node) {
+        // Display an error message to the user
+        var dm = $tw.utils.domMaker,
+            heading = dm("h1",{text: (title || "Error with vis.js Timeline")}),
+            prompt = dm("div",{text: (subtitle || "Please check the following:"), "class": "tc-error-prompt"}),
+            message = dm("div",{innerHTML: message}, {"attributes": {"style": "text-align:left;"}}),
+            button = dm("button",{text: "close"}),
+            form = dm("form",{children: [heading,prompt,message,button], "class": "tc-error-form"});
+        document.body.insertBefore(form,document.body.firstChild);
+        form.addEventListener("submit",function(event) {
+            document.body.removeChild(form);
+            event.preventDefault();
+            return false;
+        },true);
+        return null;
+    } else if(!$tw.browser) {
+        // Exit if we're under node.js
+        process.exit(1);
+    }
+  }
+
   exports.parseWidgetAttributes = parseWidgetAttributes;
   exports.displayTiddler = displayTiddler;
-
+  exports.enhancedColorStyle = enhancedColorStyle;
+  exports.dispError = dispError;
 }
 ());
